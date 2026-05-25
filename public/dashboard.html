@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Collection - StampSnap</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#271900",secondary:"#7b5800","surface-container":"#ebeef0",surface:"#f7fafc",tertiary:"#46070b","inverse-primary":"#adc7f7","surface-bright":"#f7fafc","tertiary-fixed-dim":"#ffb3b0","primary-container":"#1a365d","surface-variant":"#e0e3e5","surface-dim":"#d7dadc","on-secondary-container":"#715000","on-error-container":"#93000a","secondary-fixed":"#ffdea6",background:"#f7fafc","error-container":"#ffdad6","tertiary-container":"#631d1e",error:"#ba1a1a",outline:"#74777f","inverse-surface":"#2d3133","surface-container-low":"#f1f4f6","inverse-on-surface":"#eef1f3","surface-container-lowest":"#ffffff","on-error":"#ffffff","on-primary-fixed-variant":"#2d476f","tertiary-fixed":"#ffdad8","on-tertiary-fixed":"#3f0307","outline-variant":"#c4c6cf","primary-fixed-dim":"#adc7f7","on-surface":"#181c1e","on-secondary":"#ffffff","surface-container-high":"#e5e9eb","on-tertiary":"#ffffff","primary-fixed":"#d6e3ff","on-surface-variant":"#43474e","on-background":"#181c1e","surface-tint":"#455f88","surface-container-highest":"#e0e3e5","on-primary-container":"#86a0cd","on-primary":"#ffffff",primary:"#002045","on-primary-fixed":"#001b3c","on-secondary-fixed-variant":"#5d4200","on-tertiary-fixed-variant":"#792e2e","secondary-container":"#fdc34d","on-tertiary-container":"#e5837f","secondary-fixed-dim":"#f7bd48"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"container-max":"1200px","margin-mobile":"20px","margin-desktop":"40px",unit:"8px",gutter:"16px"},fontFamily:{"stats-numeric":["Inter"],"label-sm":["Inter"],"display-lg":["Playfair Display"],"body-lg":["Inter"],"headline-md":["Playfair Display"],"body-md":["Inter"],"display-lg-mobile":["Playfair Display"]},fontSize:{"stats-numeric":["20px",{lineHeight:"24px",fontWeight:"700"}],"label-sm":["12px",{lineHeight:"16px",letterSpacing:"0.05em",fontWeight:"600"}],"display-lg":["48px",{lineHeight:"56px",letterSpacing:"-0.02em",fontWeight:"700"}],"body-lg":["18px",{lineHeight:"28px",fontWeight:"400"}],"headline-md":["24px",{lineHeight:"32px",fontWeight:"600"}],"body-md":["16px",{lineHeight:"24px",fontWeight:"400"}],"display-lg-mobile":["32px",{lineHeight:"40px",fontWeight:"700"}]}}}}
+</script>
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex antialiased paper-texture">
+<nav class="hidden lg:flex flex-col h-screen border-r border-outline-variant bg-surface-container-lowest w-64 fixed left-0 top-0 z-20 shadow-md">
+<div class="p-6 border-b border-surface-container-high bg-surface-container-lowest">
+<h1 class="font-display-lg text-display-lg text-primary tracking-tighter" style="font-size:28px;line-height:32px;">StampSnap</h1>
+</div>
+<div class="p-6 flex items-center gap-4 bg-surface-container-low border-b border-surface-container-high">
+<div class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-md text-headline-md">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<h2 class="font-label-sm text-label-sm text-primary user-name">Collector</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant font-normal" id="sub-status">Premium Member</p>
+</div>
+</div>
+<div class="flex-1 py-6 px-4 space-y-2 overflow-y-auto">
+<a href="/dashboard.html" class="flex items-center gap-unit bg-primary-container text-on-primary-container rounded-xl px-4 py-3 transition-all duration-200 shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<a href="/app.html" class="flex items-center gap-unit text-on-surface-variant px-4 py-3 hover:bg-surface-variant rounded-xl transition-all duration-200">
+<span class="material-symbols-outlined">center_focus_weak</span>
+<span class="font-label-sm text-label-sm">Identify</span>
+</a>
+<a href="/pricing.html" class="flex items-center gap-unit text-on-surface-variant px-4 py-3 hover:bg-surface-variant rounded-xl transition-all duration-200">
+<span class="material-symbols-outlined">workspace_premium</span>
+<span class="font-label-sm text-label-sm">Subscription</span>
+</a>
+</div>
+<div class="p-4 border-t border-surface-container-high bg-surface-container-lowest">
+<div class="space-y-1">
+<a href="/" class="flex items-center gap-unit text-on-surface-variant px-4 py-2 hover:bg-surface-variant rounded-xl transition-colors">
+<span class="material-symbols-outlined" style="font-size:20px;">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<button id="logout-btn" class="w-full flex items-center gap-unit text-on-surface-variant px-4 py-2 hover:bg-surface-variant rounded-xl transition-colors">
+<span class="material-symbols-outlined" style="font-size:20px;">logout</span>
+<span class="font-label-sm text-label-sm">Sign Out</span>
+</button>
+</div>
+</div>
+</nav>
+<main class="flex-1 lg:ml-64 min-h-screen relative overflow-y-auto">
+<div class="lg:hidden flex items-center justify-between h-20 px-margin-mobile bg-surface-container-lowest border-b border-outline-variant sticky top-0 z-10 shadow-sm">
+<h1 class="font-display-lg-mobile text-display-lg-mobile text-primary tracking-tighter">StampSnap</h1>
+</div>
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12 space-y-8">
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-2">My Collection</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Manage and track your archival assets.</p>
+</div>
+<a href="/app.html" class="flex items-center justify-center gap-2 bg-primary text-on-primary px-6 py-3 rounded font-label-sm text-label-sm hover:opacity-90 transition-colors shadow-sm">
+<span class="material-symbols-outlined">add</span> New Scan
+</a>
+</header>
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="md:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl p-8 soft-shadow relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary opacity-5 rounded-bl-full pointer-events-none"></div>
+<div class="flex flex-col h-full justify-between gap-8">
+<div class="flex items-start justify-between">
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Total Portfolio Value</h3>
+<span class="material-symbols-outlined text-secondary opacity-50">account_balance</span>
+</div>
+<div class="flex items-baseline gap-4">
+<span class="font-display-lg text-display-lg text-primary" id="total-value">$0.00</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 soft-shadow flex flex-col justify-center gap-4">
+<div>
+<h4 class="font-label-sm text-label-sm text-on-surface-variant mb-1">Total Stamps</h4>
+<p class="font-stats-numeric text-stats-numeric text-primary text-3xl" id="total-count">0</p>
+</div>
+<hr class="border-t-2 border-dashed border-outline-variant my-2"/>
+<div>
+<h4 class="font-label-sm text-label-sm text-on-surface-variant mb-1">Scans Used</h4>
+<div class="flex items-center gap-2">
+<p class="font-stats-numeric text-stats-numeric text-primary text-2xl" id="scans-used">0</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant">/ <span id="scans-limit">5</span></span>
+</div>
+</div>
+</div>
+</section>
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter pb-12" id="collection-grid">
+<p class="font-body-md text-body-md text-on-surface-variant col-span-full text-center py-12">Loading your collection...</p>
+</section>
+</div>
+</main>
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script>
+async function loadDashboard() {
+  if (!isLoggedIn()) { window.location.href = '/login.html'; return; }
+  try {
+    const subData = await checkSubscription();
+    document.getElementById('scans-used').textContent = subData.scans_used || 0;
+    document.getElementById('scans-limit').textContent = subData.scans_limit || 5;
+    if (subData.trial_active) {
+      document.getElementById('sub-status').textContent = `Trial (${subData.trial_days_left}d left)`;
+    } else if (subData.status === 'active') {
+      document.getElementById('sub-status').textContent = 'Premium Member';
+    } else {
+      document.getElementById('sub-status').textContent = 'Free Member';
+    }
+    const data = await apiRequest('/stamps/collection');
+    const grid = document.getElementById('collection-grid');
+    const stamps = data.stamps || [];
+    let totalValue = 0;
+    if (stamps.length === 0) {
+      grid.innerHTML = `<div class="col-span-full text-center py-12">
+        <span class="material-symbols-outlined text-6xl text-on-surface-variant mb-4 block">auto_awesome_motion</span>
+        <h3 class="font-headline-md text-headline-md text-primary mb-2">Your collection is empty</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-6">Scan your first stamp to get started.</p>
+        <a href="/app.html" class="bg-primary text-on-primary font-label-sm text-label-sm px-8 py-3 rounded-lg inline-flex items-center gap-2">Scan a Stamp</a>
+      </div>`;
+      document.getElementById('total-value').textContent = '$0.00';
+      document.getElementById('total-count').textContent = '0';
+      return;
+    }
+    grid.innerHTML = stamps.map(s => {
+      totalValue += s.estimated_value || 0;
+      const isHighValue = s.estimated_value && s.estimated_value > 2000;
+      return `<article class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden soft-shadow group hover:shadow-md transition-shadow duration-300 flex flex-col">
+        <div class="aspect-square bg-surface-container flex items-center justify-center p-8 relative overflow-hidden">
+          <div class="absolute inset-0 bg-surface-variant opacity-20 pointer-events-none mix-blend-multiply"></div>
+          <div class="w-full h-full flex items-center justify-center">
+            <span class="font-display-lg text-display-lg text-primary/20 text-6xl">${s.name.split(' ').map(w=>w[0]).join('').slice(0,2)}</span>
+          </div>
+          <div class="absolute top-3 left-3 bg-primary text-on-primary font-label-sm text-label-sm px-2 py-1 rounded shadow-sm">${(s.country || '??').slice(0,3).toUpperCase()}</div>
+          ${isHighValue ? '<div class="absolute top-3 right-3 text-secondary"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1;">workspace_premium</span></div>' : ''}
+        </div>
+        <div class="p-4 flex-1 flex flex-col">
+          <h3 class="font-headline-md text-headline-md text-primary mb-1 text-lg">${s.name}</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant text-sm mb-4">${s.year || ''} ${s.catalog_number ? '• ' + s.catalog_number : ''}</p>
+          <div class="mt-auto pt-4 border-t-2 border-dashed border-outline-variant flex items-center justify-between">
+            <span class="font-label-sm text-label-sm text-on-surface-variant">Est. Value</span>
+            <span class="font-stats-numeric text-stats-numeric text-primary">$${(s.estimated_value || 0).toLocaleString()}</span>
+          </div>
+        </div>
+      </article>`;
+    }).join('');
+    document.getElementById('total-value').textContent = `$${totalValue.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}`;
+    document.getElementById('total-count').textContent = stamps.length;
+  } catch (err) {
+    console.error('Dashboard error:', err);
+  }
+}
+document.addEventListener('DOMContentLoaded', loadDashboard);
+</script>
+</body>
+</html>

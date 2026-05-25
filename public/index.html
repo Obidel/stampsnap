@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StampSnap - AI-Powered Stamp Identification</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#271900",secondary:"#7b5800","surface-container":"#ebeef0",surface:"#f7fafc",tertiary:"#46070b","inverse-primary":"#adc7f7","surface-bright":"#f7fafc","tertiary-fixed-dim":"#ffb3b0","primary-container":"#1a365d","surface-variant":"#e0e3e5","surface-dim":"#d7dadc","on-secondary-container":"#715000","on-error-container":"#93000a","secondary-fixed":"#ffdea6",background:"#f7fafc","error-container":"#ffdad6","tertiary-container":"#631d1e",error:"#ba1a1a",outline:"#74777f","inverse-surface":"#2d3133","surface-container-low":"#f1f4f6","inverse-on-surface":"#eef1f3","surface-container-lowest":"#ffffff","on-error":"#ffffff","on-primary-fixed-variant":"#2d476f","tertiary-fixed":"#ffdad8","on-tertiary-fixed":"#3f0307","outline-variant":"#c4c6cf","primary-fixed-dim":"#adc7f7","on-surface":"#181c1e","on-secondary":"#ffffff","surface-container-high":"#e5e9eb","on-tertiary":"#ffffff","primary-fixed":"#d6e3ff","on-surface-variant":"#43474e","on-background":"#181c1e","surface-tint":"#455f88","surface-container-highest":"#e0e3e5","on-primary-container":"#86a0cd","on-primary":"#ffffff",primary:"#002045","on-primary-fixed":"#001b3c","on-secondary-fixed-variant":"#5d4200","on-tertiary-fixed-variant":"#792e2e","secondary-container":"#fdc34d","on-tertiary-container":"#e5837f","secondary-fixed-dim":"#f7bd48"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"container-max":"1200px","margin-mobile":"20px","margin-desktop":"40px",unit:"8px",gutter:"16px"},fontFamily:{"stats-numeric":["Inter"],"label-sm":["Inter"],"display-lg":["Playfair Display"],"body-lg":["Inter"],"headline-md":["Playfair Display"],"body-md":["Inter"],"display-lg-mobile":["Playfair Display"]},fontSize:{"stats-numeric":["20px",{lineHeight:"24px",fontWeight:"700"}],"label-sm":["12px",{lineHeight:"16px",letterSpacing:"0.05em",fontWeight:"600"}],"display-lg":["48px",{lineHeight:"56px",letterSpacing:"-0.02em",fontWeight:"700"}],"body-lg":["18px",{lineHeight:"28px",fontWeight:"400"}],"headline-md":["24px",{lineHeight:"32px",fontWeight:"600"}],"body-md":["16px",{lineHeight:"24px",fontWeight:"400"}],"display-lg-mobile":["32px",{lineHeight:"40px",fontWeight:"700"}]}}}}
+</script>
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased paper-texture selection:bg-secondary-container selection:text-on-secondary-container">
+<header class="w-full top-0 sticky bg-surface border-b border-outline-variant shadow-sm z-50">
+<div class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary tracking-tighter">StampSnap</span>
+</div>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-sm text-label-sm" href="/">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="/app.html">AI Scan</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="/pricing.html">Pricing</a>
+</nav>
+<div class="flex items-center gap-4">
+<a href="/login.html" class="auth-btn hidden md:flex items-center justify-center font-label-sm text-label-sm text-primary border border-outline-variant px-6 py-2 rounded hover:bg-surface-container-low transition-colors">Sign In</a>
+<a href="/signup.html" class="auth-btn font-label-sm text-label-sm bg-primary text-on-primary px-6 py-2 rounded hover:bg-primary-container hover:text-on-primary-container transition-all shadow-sm">Get Started</a>
+<div class="user-menu hidden relative">
+<button onclick="document.getElementById('user-dropdown').classList.toggle('hidden')" class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 font-label-sm text-label-sm hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm">person</span>
+<span class="user-name">User</span>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<div id="user-dropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg py-2 z-50">
+<a href="/dashboard.html" class="flex items-center gap-2 px-4 py-2 font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-sm">dashboard</span>Dashboard</a>
+<a href="/app.html" class="flex items-center gap-2 px-4 py-2 font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-sm">center_focus_weak</span>Scan</a>
+<hr class="border-outline-variant my-1">
+<button id="logout-btn" class="w-full flex items-center gap-2 px-4 py-2 font-label-sm text-label-sm text-tertiary hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-sm">logout</span>Sign Out</button>
+</div>
+</div>
+</div>
+</div>
+</header>
+
+<section class="relative pt-24 pb-32 overflow-hidden bg-surface-container-lowest">
+<div class="absolute inset-0 hero-pattern mix-blend-multiply opacity-20 pointer-events-none"></div>
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div class="flex flex-col gap-6">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container w-fit shadow-sm">
+<span class="material-symbols-outlined text-sm">workspace_premium</span>
+<span class="font-label-sm text-label-sm">Professional Grade AI</span>
+</div>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary tracking-tight leading-tight">Identify any stamp in seconds with AI</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl leading-relaxed">Get instant valuation, historical data, and rarity scores. Turn your smartphone into an expert philatelic magnifying glass.</p>
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+<a href="/app.html" class="bg-primary text-on-primary font-label-sm text-label-sm px-8 py-4 rounded-lg flex items-center justify-center gap-2 hover:bg-primary-container hover:text-on-primary-container transition-all shadow-md active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">qr_code_scanner</span>Start Scanning
+</a>
+<a href="/pricing.html" class="bg-surface-container-low text-on-surface font-label-sm text-label-sm px-8 py-4 rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container hover:text-primary transition-all border border-outline-variant">View Pricing</a>
+</div>
+<div class="mt-8 flex items-center gap-4 text-on-surface-variant">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full bg-surface-variant border-2 border-surface flex items-center justify-center"><span class="material-symbols-outlined text-sm">person</span></div>
+<div class="w-8 h-8 rounded-full bg-surface-variant border-2 border-surface flex items-center justify-center"><span class="material-symbols-outlined text-sm">person</span></div>
+<div class="w-8 h-8 rounded-full bg-surface-variant border-2 border-surface flex items-center justify-center"><span class="material-symbols-outlined text-sm">person</span></div>
+</div>
+<span class="font-label-sm text-label-sm">Trusted by 10,000+ collectors globally</span>
+</div>
+</div>
+<div class="relative">
+<div class="absolute inset-0 bg-secondary rounded-xl transform rotate-3 scale-105 opacity-10"></div>
+<div class="relative bg-surface-container-lowest rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-outline-variant overflow-hidden aspect-[4/3] flex items-center justify-center">
+<img alt="Stamp scanning interface" class="object-cover w-full h-full opacity-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnOHjb32B1yEi4lNPwq6guAP1CxJ6Ua2IeDqi5xKYSNoHlSR_W4rMWpxcCPszVOvP-fNxxAFqLEwT_B8JMCoqOZie1v9aDhJNXZNKyq2xecmbMCScwWSw889r3SCl1chbhv6H_e17oDOrQYeDOZKpc8abNwtyG3GhCDDuiKmf1tRb9yMHRV3BiisgCARug5Ic0ls_MqQC92E1MSUcs_NqrhxGd2XI9ElqT5yiaftL5v7vyaBHRa43rTUPBZCMLNAwO2Gfd_MmNu0c">
+<div class="absolute inset-x-8 bottom-8 bg-surface/90 backdrop-blur-md border border-outline-variant rounded-lg p-4 shadow-lg flex items-center gap-4">
+<div class="w-12 h-12 bg-secondary text-on-secondary rounded flex items-center justify-center"><span class="material-symbols-outlined">verified</span></div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Match Found</p>
+<p class="font-headline-md text-headline-md text-primary">Penny Black (1840)</p>
+</div>
+<div class="ml-auto text-right">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Est. Value</p>
+<p class="font-stats-numeric text-stats-numeric text-secondary">$3,200</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="py-24 bg-surface">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="text-center mb-16">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-4">How It Works</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Three simple steps to identify and value any stamp in your collection.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 soft-shadow text-center">
+<div class="w-16 h-16 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center mx-auto mb-6"><span class="material-symbols-outlined text-3xl" style="font-variation-settings:'FILL' 1;">camera</span></div>
+<h3 class="font-headline-md text-headline-md text-primary mb-3 text-xl">Capture</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Take a photo of your stamp using your phone's camera or upload an existing image from your gallery.</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 soft-shadow text-center">
+<div class="w-16 h-16 bg-secondary-container text-on-secondary-container rounded-full flex items-center justify-center mx-auto mb-6"><span class="material-symbols-outlined text-3xl" style="font-variation-settings:'FILL' 1;">analytics</span></div>
+<h3 class="font-headline-md text-headline-md text-primary mb-3 text-xl">Analyze</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Our AI examines perforations, watermarks, colors, and engravings against a database of 500,000+ stamps.</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 soft-shadow text-center">
+<div class="w-16 h-16 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center mx-auto mb-6"><span class="material-symbols-outlined text-3xl" style="font-variation-settings:'FILL' 1;">workspace_premium</span></div>
+<h3 class="font-headline-md text-headline-md text-primary mb-3 text-xl">Discover</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Get instant identification, estimated value, rarity score, and detailed historical background for your stamp.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="py-24 bg-surface-container-low">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="text-center mb-16">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-4">Trusted by Collectors Worldwide</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Join thousands of philatelists who use StampSnap to manage and value their collections.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 soft-shadow">
+<div class="flex items-center gap-1 text-secondary mb-4">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-4">"Incredibly accurate. It identified a rare 1847 Mauritius I've been trying to catalog for years. Worth every penny of the subscription."</p>
+<div>
+<p class="font-label-sm text-label-sm text-primary">James Whitfield</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Royal Philatelic Society</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 soft-shadow">
+<div class="flex items-center gap-1 text-secondary mb-4">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-4">"The valuation estimates are remarkably close to auction results. I've used it to appraise my entire 2,000-piece collection."</p>
+<div>
+<p class="font-label-sm text-label-sm text-primary">Dr. Elena Voss</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">German Philatelic Association</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 soft-shadow">
+<div class="flex items-center gap-1 text-secondary mb-4">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-4">"Perfect for estate sales. I can quickly assess whether a stamp collection has hidden gems without being an expert."</p>
+<div>
+<p class="font-label-sm text-label-sm text-primary">Marcus Chen</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Professional Appraiser</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<footer class="bg-surface-container-highest border-t border-dashed border-outline-variant w-full py-12 mt-auto px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="col-span-1 md:col-span-1">
+<span class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary tracking-tighter block mb-4">StampSnap</span>
+<p class="font-body-md text-body-md text-on-surface-variant">&copy; 2026 StampSnap Philatelic AI. All rights reserved.</p>
+</div>
+<div class="col-span-1 flex flex-col gap-3">
+<span class="font-label-sm text-label-sm text-primary uppercase">Resources</span>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Philatelic Resources</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Auction Database</a>
+</div>
+<div class="col-span-1 flex flex-col gap-3">
+<span class="font-label-sm text-label-sm text-primary uppercase">Services</span>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Expert Verification</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Collection Management</a>
+</div>
+<div class="col-span-1 flex flex-col gap-3">
+<span class="font-label-sm text-label-sm text-primary uppercase">Legal</span>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Terms of Service</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Privacy Policy</a>
+</div>
+</footer>
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+</body>
+</html>

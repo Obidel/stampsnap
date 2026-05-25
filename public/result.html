@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Scan Result - StampSnap</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#271900",secondary:"#7b5800","surface-container":"#ebeef0",surface:"#f7fafc",tertiary:"#46070b","inverse-primary":"#adc7f7","surface-bright":"#f7fafc","tertiary-fixed-dim":"#ffb3b0","primary-container":"#1a365d","surface-variant":"#e0e3e5","surface-dim":"#d7dadc","on-secondary-container":"#715000","on-error-container":"#93000a","secondary-fixed":"#ffdea6",background:"#f7fafc","error-container":"#ffdad6","tertiary-container":"#631d1e",error:"#ba1a1a",outline:"#74777f","inverse-surface":"#2d3133","surface-container-low":"#f1f4f6","inverse-on-surface":"#eef1f3","surface-container-lowest":"#ffffff","on-error":"#ffffff","on-primary-fixed-variant":"#2d476f","tertiary-fixed":"#ffdad8","on-tertiary-fixed":"#3f0307","outline-variant":"#c4c6cf","primary-fixed-dim":"#adc7f7","on-surface":"#181c1e","on-secondary":"#ffffff","surface-container-high":"#e5e9eb","on-tertiary":"#ffffff","primary-fixed":"#d6e3ff","on-surface-variant":"#43474e","on-background":"#181c1e","surface-tint":"#455f88","surface-container-highest":"#e0e3e5","on-primary-container":"#86a0cd","on-primary":"#ffffff",primary:"#002045","on-primary-fixed":"#001b3c","on-secondary-fixed-variant":"#5d4200","on-tertiary-fixed-variant":"#792e2e","secondary-container":"#fdc34d","on-tertiary-container":"#e5837f","secondary-fixed-dim":"#f7bd48"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"container-max":"1200px","margin-mobile":"20px","margin-desktop":"40px",unit:"8px",gutter:"16px"},fontFamily:{"stats-numeric":["Inter"],"label-sm":["Inter"],"display-lg":["Playfair Display"],"body-lg":["Inter"],"headline-md":["Playfair Display"],"body-md":["Inter"],"display-lg-mobile":["Playfair Display"]},fontSize:{"stats-numeric":["20px",{lineHeight:"24px",fontWeight:"700"}],"label-sm":["12px",{lineHeight:"16px",letterSpacing:"0.05em",fontWeight:"600"}],"display-lg":["48px",{lineHeight:"56px",letterSpacing:"-0.02em",fontWeight:"700"}],"body-lg":["18px",{lineHeight:"28px",fontWeight:"400"}],"headline-md":["24px",{lineHeight:"32px",fontWeight:"600"}],"body-md":["16px",{lineHeight:"24px",fontWeight:"400"}],"display-lg-mobile":["32px",{lineHeight:"40px",fontWeight:"700"}]}}}}
+</script>
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased min-h-screen flex flex-col paper-texture">
+<nav class="w-full top-0 sticky bg-surface border-b border-outline-variant shadow-sm z-50">
+<div class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="flex items-center gap-8">
+<a class="font-display-lg text-display-lg text-primary tracking-tighter" href="/">StampSnap</a>
+</div>
+<div class="user-menu hidden">
+<span class="font-label-sm text-label-sm text-on-surface-variant user-name">User</span>
+</div>
+</div>
+</nav>
+<main class="flex-1 px-margin-mobile md:px-margin-desktop py-8 max-w-container-max mx-auto w-full" id="result-container">
+<div class="text-center py-20" id="loading-state">
+<div class="animate-spin w-12 h-12 border-4 border-secondary border-t-transparent rounded-full mx-auto mb-4"></div>
+<p class="font-body-md text-body-md text-on-surface-variant">Loading result...</p>
+</div>
+</main>
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script>
+function renderResult(result) {
+  const container = document.getElementById('result-container');
+  const s = result.stamp;
+  if (!result.identified || !s) {
+    container.innerHTML = `
+      <div class="text-center py-20">
+        <span class="material-symbols-outlined text-6xl text-on-surface-variant mb-4">search_off</span>
+        <h1 class="font-headline-md text-headline-md text-primary mb-2">No Match Found</h1>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-8">We couldn't identify this stamp with sufficient confidence. Try a clearer image.</p>
+        <a href="/app.html" class="bg-primary text-on-primary font-label-sm text-label-sm px-8 py-3 rounded-lg inline-flex items-center gap-2 hover:opacity-90 transition-opacity">
+          <span class="material-symbols-outlined">arrow_back</span> Try Again
+        </a>
+      </div>`;
+    return;
+  }
+  const confidencePct = Math.round(result.confidence * 100);
+  const valueRange = s.estimated_value_range;
+  const avgValue = s.estimated_value;
+  container.innerHTML = `
+    <div class="mb-8 flex items-start justify-between flex-wrap gap-4">
+      <div>
+        <div class="flex items-center gap-2 mb-2 text-primary">
+          <span class="material-symbols-outlined text-green-600" style="font-variation-settings:'FILL' 1;">check_circle</span>
+          <span class="font-label-sm text-label-sm tracking-widest uppercase text-on-surface-variant">Authentication Complete &mdash; ${confidencePct}% Match</span>
+        </div>
+        <h1 class="font-display-lg text-display-lg text-on-surface">${s.name}</h1>
+      </div>
+      <a href="/dashboard.html" class="bg-primary text-on-primary px-5 py-2.5 rounded-lg font-label-sm text-label-sm flex items-center gap-2 hover:opacity-90 transition-colors shadow-sm">
+        <span class="material-symbols-outlined text-sm">bookmark_add</span> Save to Collection
+      </a>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+      <div class="lg:col-span-5 flex flex-col gap-gutter">
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_4px_20px_rgba(26,54,93,0.05)] overflow-hidden paper-texture">
+          <div class="p-6 flex items-center justify-center min-h-[400px] bg-surface-container-low">
+            <div class="relative p-4 bg-white shadow-md border border-surface-variant">
+              <img src="${s.image_url || 'https://via.placeholder.com/400x500?text=Stamp'}" alt="${s.name}" class="w-full h-auto object-contain max-h-[500px]">
+            </div>
+          </div>
+          <div class="p-4 border-t border-outline-variant bg-surface flex justify-between items-center">
+            <span class="font-label-sm text-label-sm text-on-surface-variant">Catalog #${s.catalog_number || 'N/A'} &bull; ${s.condition || 'N/A'}</span>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-7 flex flex-col gap-gutter">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-gutter">
+          <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_4px_20px_rgba(26,54,93,0.05)] p-6 paper-texture">
+            <h2 class="font-headline-md text-headline-md text-primary mb-4 flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary">info</span> Details
+            </h2>
+            <dl class="space-y-4">
+              <div class="border-b border-dotted border-outline-variant pb-2">
+                <dt class="font-label-sm text-label-sm text-on-surface-variant mb-1">Country</dt>
+                <dd class="font-body-md text-body-md text-on-surface font-semibold">${s.country || 'Unknown'}</dd>
+              </div>
+              <div class="border-b border-dotted border-outline-variant pb-2">
+                <dt class="font-label-sm text-label-sm text-on-surface-variant mb-1">Issued</dt>
+                <dd class="font-body-md text-body-md text-on-surface font-semibold">${s.year || 'Unknown'}</dd>
+              </div>
+              <div class="border-b border-dotted border-outline-variant pb-2">
+                <dt class="font-label-sm text-label-sm text-on-surface-variant mb-1">Perforation</dt>
+                <dd class="font-body-md text-body-md text-on-surface font-semibold">${s.perforation || 'N/A'}</dd>
+              </div>
+              <div class="pt-1">
+                <dt class="font-label-sm text-label-sm text-on-surface-variant mb-1">Condition</dt>
+                <dd class="font-body-md text-body-md text-on-surface font-semibold">${s.condition || 'N/A'}</dd>
+              </div>
+            </dl>
+          </div>
+          <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_4px_20px_rgba(26,54,93,0.05)] p-6 paper-texture relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-secondary-container"></div>
+            <h2 class="font-headline-md text-headline-md text-primary mb-4 flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary">workspace_premium</span> Valuation
+            </h2>
+            <div class="mb-6">
+              <p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Estimated Value</p>
+              <div class="flex items-baseline gap-2">
+                <span class="font-stats-numeric text-stats-numeric text-3xl text-secondary-container bg-primary px-3 py-1 rounded-lg">$${valueRange ? valueRange.low.toLocaleString() : avgValue.toLocaleString()}</span>
+                ${valueRange ? `<span class="text-on-surface-variant">-</span><span class="font-stats-numeric text-stats-numeric text-xl text-on-surface">$${valueRange.high.toLocaleString()}</span>` : ''}
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between items-end mb-1">
+                <p class="font-label-sm text-label-sm text-on-surface-variant">Rarity Score</p>
+                <span class="font-label-sm text-label-sm text-primary font-bold">${s.rarity_score || 'N/A'}/10</span>
+              </div>
+              <div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden flex">
+                <div class="h-full bg-secondary-container" style="width:${(s.rarity_score || 0) * 10}%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_4px_20px_rgba(26,54,93,0.05)] p-6 paper-texture">
+          <h2 class="font-headline-md text-headline-md text-primary mb-4">Description</h2>
+          <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">${s.description || 'No description available.'}</p>
+          ${s.watermark ? `<p class="font-body-md text-body-md text-on-surface-variant mt-3"><strong>Watermark:</strong> ${s.watermark}</p>` : ''}
+          ${s.denomination ? `<p class="font-body-md text-body-md text-on-surface-variant"><strong>Denomination:</strong> ${s.denomination}</p>` : ''}
+        </div>
+        <div class="flex flex-wrap gap-4 mt-2">
+          <a href="/app.html" class="flex-1 bg-surface-container-lowest border border-outline-variant text-on-surface px-4 py-3 rounded-lg font-label-sm text-label-sm flex items-center justify-center gap-2 hover:bg-surface-container-low transition-colors shadow-sm">
+            <span class="material-symbols-outlined text-sm">arrow_back</span> Scan Another
+          </a>
+          <a href="/dashboard.html" class="flex-1 bg-surface-container-lowest border border-outline-variant text-on-surface px-4 py-3 rounded-lg font-label-sm text-label-sm flex items-center justify-center gap-2 hover:bg-surface-container-low transition-colors shadow-sm">
+            <span class="material-symbols-outlined text-sm">auto_awesome_motion</span> View Collection
+          </a>
+        </div>
+      </div>
+    </div>`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const data = sessionStorage.getItem('last_scan_result');
+  if (!data) {
+    document.getElementById('result-container').innerHTML = `
+      <div class="text-center py-20">
+        <h1 class="font-headline-md text-headline-md text-primary mb-4">No Scan Data</h1>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-8">Please scan a stamp first.</p>
+        <a href="/app.html" class="bg-primary text-on-primary font-label-sm text-label-sm px-8 py-3 rounded-lg inline-flex items-center gap-2">Go to Scanner</a>
+      </div>`;
+    return;
+  }
+  try {
+    const result = JSON.parse(data);
+    renderResult(result);
+  } catch {
+    document.getElementById('result-container').innerHTML = '<p class="text-center py-20 font-body-md text-body-md text-on-surface-variant">Error loading result.</p>';
+  }
+});
+</script>
+</body>
+</html>

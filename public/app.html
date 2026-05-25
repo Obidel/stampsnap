@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Scan - StampSnap</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#271900",secondary:"#7b5800","surface-container":"#ebeef0",surface:"#f7fafc",tertiary:"#46070b","inverse-primary":"#adc7f7","surface-bright":"#f7fafc","tertiary-fixed-dim":"#ffb3b0","primary-container":"#1a365d","surface-variant":"#e0e3e5","surface-dim":"#d7dadc","on-secondary-container":"#715000","on-error-container":"#93000a","secondary-fixed":"#ffdea6",background:"#f7fafc","error-container":"#ffdad6","tertiary-container":"#631d1e",error:"#ba1a1a",outline:"#74777f","inverse-surface":"#2d3133","surface-container-low":"#f1f4f6","inverse-on-surface":"#eef1f3","surface-container-lowest":"#ffffff","on-error":"#ffffff","on-primary-fixed-variant":"#2d476f","tertiary-fixed":"#ffdad8","on-tertiary-fixed":"#3f0307","outline-variant":"#c4c6cf","primary-fixed-dim":"#adc7f7","on-surface":"#181c1e","on-secondary":"#ffffff","surface-container-high":"#e5e9eb","on-tertiary":"#ffffff","primary-fixed":"#d6e3ff","on-surface-variant":"#43474e","on-background":"#181c1e","surface-tint":"#455f88","surface-container-highest":"#e0e3e5","on-primary-container":"#86a0cd","on-primary":"#ffffff",primary:"#002045","on-primary-fixed":"#001b3c","on-secondary-fixed-variant":"#5d4200","on-tertiary-fixed-variant":"#792e2e","secondary-container":"#fdc34d","on-tertiary-container":"#e5837f","secondary-fixed-dim":"#f7bd48"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"container-max":"1200px","margin-mobile":"20px","margin-desktop":"40px",unit:"8px",gutter:"16px"},fontFamily:{"stats-numeric":["Inter"],"label-sm":["Inter"],"display-lg":["Playfair Display"],"body-lg":["Inter"],"headline-md":["Playfair Display"],"body-md":["Inter"],"display-lg-mobile":["Playfair Display"]},fontSize:{"stats-numeric":["20px",{lineHeight:"24px",fontWeight:"700"}],"label-sm":["12px",{lineHeight:"16px",letterSpacing:"0.05em",fontWeight:"600"}],"display-lg":["48px",{lineHeight:"56px",letterSpacing:"-0.02em",fontWeight:"700"}],"body-lg":["18px",{lineHeight:"28px",fontWeight:"400"}],"headline-md":["24px",{lineHeight:"32px",fontWeight:"600"}],"body-md":["16px",{lineHeight:"24px",fontWeight:"400"}],"display-lg-mobile":["32px",{lineHeight:"40px",fontWeight:"700"}]}}}}
+</script>
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col paper-texture">
+<nav class="w-full top-0 sticky bg-surface border-b border-outline-variant shadow-sm z-50">
+<div class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="flex items-center gap-8">
+<a class="font-display-lg text-display-lg text-primary tracking-tighter" href="/">StampSnap</a>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-sm text-label-sm" href="/app.html">AI Scan</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="/dashboard.html">Collection</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="/pricing.html">Pricing</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<a href="/login.html" class="auth-btn font-label-sm text-label-sm text-primary border border-outline-variant px-4 py-2 rounded hover:bg-surface-container-low transition-colors">Sign In</a>
+<a href="/signup.html" class="auth-btn font-label-sm text-label-sm bg-primary text-on-primary px-4 py-2 rounded hover:opacity-90 transition-opacity">Get Started</a>
+<div class="user-menu hidden relative">
+<button onclick="document.getElementById('user-dropdown').classList.toggle('hidden')" class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 font-label-sm text-label-sm hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm">person</span>
+<span class="user-name">User</span>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<div id="user-dropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg py-2 z-50">
+<a href="/dashboard.html" class="flex items-center gap-2 px-4 py-2 font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-sm">dashboard</span>Dashboard</a>
+<a href="/app.html" class="flex items-center gap-2 px-4 py-2 font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-sm">center_focus_weak</span>Scan</a>
+<hr class="border-outline-variant my-1">
+<button id="logout-btn" class="w-full flex items-center gap-2 px-4 py-2 font-label-sm text-label-sm text-tertiary hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-sm">logout</span>Sign Out</button>
+</div>
+</div>
+</div>
+</div>
+</nav>
+
+<div class="flex flex-1 overflow-hidden">
+<main class="flex-1 p-margin-mobile md:p-margin-desktop bg-surface">
+<div class="max-w-container-max mx-auto grid grid-cols-1 xl:grid-cols-3 gap-6 h-full">
+<section class="xl:col-span-2 flex flex-col bg-surface-container-lowest rounded-xl shadow-sm border border-surface-variant relative overflow-hidden min-h-[600px]">
+<div class="p-6 border-b border-surface-container-low flex justify-between items-center z-10 bg-surface-container-lowest">
+<div>
+<h1 class="font-headline-md text-headline-md text-primary">AI Identification</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Position the stamp clearly within the frame.</p>
+</div>
+<div class="flex gap-2">
+<button onclick="toggleCamera()" class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors border border-outline-variant" title="Flip camera">
+<span class="material-symbols-outlined">flip_camera_ios</span>
+</button>
+</div>
+</div>
+<div class="flex-1 relative bg-inverse-surface flex items-center justify-center p-8 overflow-hidden min-h-[400px]" id="viewfinder">
+<div id="scan-placeholder" class="absolute inset-0 flex items-center justify-center">
+<div class="text-center text-on-surface-variant">
+<span class="material-symbols-outlined text-6xl block mb-4">image</span>
+<p class="font-body-md text-body-md">Upload or capture a stamp image</p>
+</div>
+</div>
+<video id="camera-feed" class="hidden absolute inset-0 w-full h-full object-cover"></video>
+<div id="viewfinder-frame" class="relative w-full max-w-md aspect-[3/4] border-2 border-secondary/50 rounded-lg overflow-hidden z-10 shadow-2xl hidden">
+<div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-secondary"></div>
+<div class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-secondary"></div>
+<div class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-secondary"></div>
+<div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-secondary"></div>
+<div id="stamp-preview" class="w-full h-full p-8 flex items-center justify-center">
+<img id="preview-image" class="w-3/4 h-auto object-cover border-4 border-surface-container-lowest shadow-lg hidden">
+</div>
+<div id="scanner-beam" class="scanner-beam hidden"></div>
+<div id="scan-status" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 glass-panel px-4 py-2 rounded-full flex items-center gap-2 hidden">
+<span class="material-symbols-outlined text-secondary animate-pulse" style="font-variation-settings:'FILL' 1;">analytics</span>
+<span class="font-label-sm text-label-sm text-primary" id="scan-status-text">Analyzing...</span>
+</div>
+</div>
+</div>
+<div class="p-6 border-t border-surface-container-low flex justify-between items-center z-10 bg-surface-container-lowest">
+<div class="flex gap-3">
+<button onclick="document.getElementById('file-input').click()" class="flex items-center gap-2 text-primary font-label-sm text-label-sm hover:bg-surface-container-low px-4 py-2 rounded-lg transition-colors border border-outline-variant">
+<span class="material-symbols-outlined">photo_library</span>Upload Image
+</button>
+<input type="file" id="file-input" accept="image/*" class="hidden" onchange="handleFileUpload(event)">
+</div>
+<button id="capture-btn" onclick="handleScan()" class="bg-primary text-on-primary font-label-sm text-label-sm px-8 py-3 rounded-full flex items-center gap-2 hover:bg-primary/90 transition-transform hover:scale-95 shadow-md disabled:opacity-50 disabled:cursor-not-allowed">
+<span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">camera</span>Identify
+</button>
+</div>
+</section>
+<aside class="xl:col-span-1 flex flex-col gap-6">
+<div class="bg-secondary-fixed text-on-secondary-fixed rounded-xl p-6 shadow-sm border border-secondary-fixed-dim relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-20">
+<span class="material-symbols-outlined text-6xl">lightbulb</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-4 relative z-10" style="font-size:20px;line-height:28px;">Scanning Tips</h3>
+<ul class="space-y-3 font-body-md text-body-md text-sm relative z-10">
+<li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-lg mt-0.5" style="font-variation-settings:'FILL' 1;">check_circle</span><span>Use well-lit, natural lighting to avoid harsh glare.</span></li>
+<li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-lg mt-0.5" style="font-variation-settings:'FILL' 1;">check_circle</span><span>Place the stamp flat on a solid, contrasting background.</span></li>
+<li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-lg mt-0.5" style="font-variation-settings:'FILL' 1;">check_circle</span><span>Ensure the entire perforated edge is visible within the frame.</span></li>
+</ul>
+</div>
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-surface-variant flex-1 flex flex-col overflow-hidden">
+<div class="p-4 border-b border-surface-container-low flex justify-between items-center perforated-border pb-4">
+<h3 class="font-label-sm text-label-sm text-primary uppercase">Recent Activity</h3>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-4" id="recent-activity">
+<p class="font-body-md text-body-md text-on-surface-variant text-center py-8">Sign in to see your scan history</p>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</div>
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/camera.js"></script>
+<script>
+let currentImageBlob = null;
+let cameraActive = false;
+
+async function loadHistory() {
+  if (!isLoggedIn()) return;
+  try {
+    const data = await apiRequest('/stamps/history');
+    const container = document.getElementById('recent-activity');
+    if (data.history.length === 0) {
+      container.innerHTML = '<p class="font-body-md text-body-md text-on-surface-variant text-center py-8">No scans yet</p>';
+      return;
+    }
+    container.innerHTML = data.history.map(h => {
+      const isIdentified = h.name;
+      const initials = isIdentified ? h.name.split(' ').map(w=>w[0]).join('').slice(0,2) : '??';
+      return `<div class="flex items-center gap-4 p-3 rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer border border-transparent hover:border-outline-variant">
+        <div class="w-12 h-12 rounded bg-surface-variant flex-shrink-0 border border-outline-variant overflow-hidden p-1 bg-white flex items-center justify-center">
+          ${isIdentified ? `<span class="font-label-sm text-label-sm text-primary font-bold">${initials}</span>` : `<span class="material-symbols-outlined text-on-surface-variant text-xl">image_not_supported</span>`}
+        </div>
+        <div class="flex-1 min-w-0">
+          <h4 class="font-label-sm text-label-sm text-primary truncate">${isIdentified || 'Unidentified Scan'}</h4>
+          <p class="font-body-md text-xs text-on-surface-variant truncate">${new Date(h.scanned_at).toLocaleDateString()} &bull; ${Math.round(h.scan_confidence * 100)}% match</p>
+        </div>
+        ${h.estimated_value ? `<div class="text-right flex-shrink-0"><span class="inline-block bg-secondary text-on-secondary text-[10px] font-bold px-2 py-0.5 rounded-sm">$${h.estimated_value.toLocaleString()}</span></div>` : ''}
+      </div>`;
+    }).join('');
+  } catch {}
+}
+
+async function toggleCamera() {
+  const video = document.getElementById('camera-feed');
+  const frame = document.getElementById('viewfinder-frame');
+  const placeholder = document.getElementById('scan-placeholder');
+  if (cameraActive) {
+    stopCamera();
+    cameraActive = false;
+    video.classList.add('hidden');
+    frame.classList.add('hidden');
+    placeholder.classList.remove('hidden');
+    return;
+  }
+  placeholder.classList.add('hidden');
+  frame.classList.remove('hidden');
+  document.getElementById('stamp-preview').classList.remove('hidden');
+  document.getElementById('preview-image').classList.add('hidden');
+  video.classList.remove('hidden');
+  const success = await startCamera(video);
+  if (success) {
+    cameraActive = true;
+  } else {
+    frame.classList.add('hidden');
+    placeholder.classList.remove('hidden');
+  }
+}
+
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  if (cameraActive) { stopCamera(); cameraActive = false; document.getElementById('camera-feed').classList.add('hidden'); }
+  currentImageBlob = file;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    document.getElementById('scan-placeholder').classList.add('hidden');
+    document.getElementById('viewfinder-frame').classList.remove('hidden');
+    document.getElementById('stamp-preview').classList.remove('hidden');
+    const img = document.getElementById('preview-image');
+    img.src = e.target.result;
+    img.classList.remove('hidden');
+    document.getElementById('capture-btn').disabled = false;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function handleScan() {
+  if (!isLoggedIn()) { window.location.href = '/login.html'; return; }
+  const btn = document.getElementById('capture-btn');
+  const beam = document.getElementById('scanner-beam');
+  const status = document.getElementById('scan-status');
+  const statusText = document.getElementById('scan-status-text');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Scanning...';
+  beam.classList.remove('hidden');
+  status.classList.remove('hidden');
+  try {
+    let imageBlob = currentImageBlob;
+    if (cameraActive) {
+      const video = document.getElementById('camera-feed');
+      imageBlob = await captureFrame(video);
+    }
+    if (!imageBlob) { throw new Error('No image selected'); }
+    const statusData = await checkSubscription();
+    if (!statusData.is_active) {
+      statusText.textContent = 'Checking subscription...';
+    }
+    statusText.textContent = 'Analyzing perforations...';
+    await new Promise(r => setTimeout(r, 800));
+    statusText.textContent = 'Matching catalog entries...';
+    await new Promise(r => setTimeout(r, 800));
+    const formData = new FormData();
+    formData.append('image', imageBlob, 'stamp.jpg');
+    const result = await apiUpload('/stamps/identify', formData);
+    sessionStorage.setItem('last_scan_result', JSON.stringify(result));
+    window.location.href = '/result.html';
+  } catch (err) {
+    statusText.textContent = 'Scan failed';
+    beam.classList.add('hidden');
+    setTimeout(() => status.classList.add('hidden'), 2000);
+    alert(err.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1;">camera</span>Identify';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (isLoggedIn()) loadHistory();
+});
+</script>
+</body>
+</html>

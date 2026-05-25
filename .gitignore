@@ -1,0 +1,4 @@
+node_modules/
+stampsnap.db
+uploads/
+.env
