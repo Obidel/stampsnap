@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Article - StampSnap</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#271900",secondary:"#7b5800","surface-container":"#ebeef0",surface:"#f7fafc",tertiary:"#46070b","inverse-primary":"#adc7f7","surface-bright":"#f7fafc","tertiary-fixed-dim":"#ffb3b0","primary-container":"#1a365d","surface-variant":"#e0e3e5","surface-dim":"#d7dadc","on-secondary-container":"#715000","on-error-container":"#93000a","secondary-fixed":"#ffdea6",background:"#f7fafc","error-container":"#ffdad6","tertiary-container":"#631d1e",error:"#ba1a1a",outline:"#74777f","inverse-surface":"#2d3133","surface-container-low":"#f1f4f6","inverse-on-surface":"#eef1f3","surface-container-lowest":"#ffffff","on-error":"#ffffff","on-primary-fixed-variant":"#2d476f","tertiary-fixed":"#ffdad8","on-tertiary-fixed":"#3f0307","outline-variant":"#c4c6cf","primary-fixed-dim":"#adc7f7","on-surface":"#181c1e","on-secondary":"#ffffff","surface-container-high":"#e5e9eb","on-tertiary":"#ffffff","primary-fixed":"#d6e3ff","on-surface-variant":"#43474e","on-background":"#181c1e","surface-tint":"#455f88","surface-container-highest":"#e0e3e5","on-primary-container":"#86a0cd","on-primary":"#ffffff",primary:"#002045","on-primary-fixed":"#001b3c","on-secondary-fixed-variant":"#5d4200","on-tertiary-fixed-variant":"#792e2e","secondary-container":"#fdc34d","on-tertiary-container":"#e5837f","secondary-fixed-dim":"#f7bd48"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"container-max":"1200px","margin-mobile":"20px","margin-desktop":"40px",unit:"8px",gutter:"16px"},fontFamily:{"stats-numeric":["Inter"],"label-sm":["Inter"],"display-lg":["Playfair Display"],"body-lg":["Inter"],"headline-md":["Playfair Display"],"body-md":["Inter"],"display-lg-mobile":["Playfair Display"]},fontSize:{"stats-numeric":["20px",{lineHeight:"24px",fontWeight:"700"}],"label-sm":["12px",{lineHeight:"16px",letterSpacing:"0.05em",fontWeight:"600"}],"display-lg":["48px",{lineHeight:"56px",letterSpacing:"-0.02em",fontWeight:"700"}],"display-lg-mobile":["34px",{lineHeight:"42px",letterSpacing:"-0.01em",fontWeight:"700"}],"headline-md":["24px",{lineHeight:"32px",fontWeight:"600"}],"body-lg":["20px",{lineHeight:"28px"}],"body-md":["16px",{lineHeight:"24px"}]}}}</script>
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col paper-texture">
+<nav class="w-full top-0 sticky bg-surface border-b border-outline-variant shadow-sm z-50">
+<div class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="flex items-center gap-8">
+<a class="font-display-lg text-display-lg text-primary tracking-tighter" href="/">StampSnap</a>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="/">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="/app.html">AI Scan</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-sm text-label-sm" href="/blog.html">Blog</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="/pricing.html">Pricing</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<a href="/login.html" class="auth-btn font-label-sm text-label-sm text-primary border border-outline-variant px-4 py-2 rounded hover:bg-surface-container-low transition-colors">Sign In</a>
+<a href="/signup.html" class="auth-btn font-label-sm text-label-sm bg-primary text-on-primary px-4 py-2 rounded hover:opacity-90 transition-opacity">Get Started</a>
+<div class="user-menu hidden relative">
+<button onclick="document.getElementById('user-dropdown').classList.toggle('hidden')" class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 font-label-sm text-label-sm hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm">person</span>
+<span class="user-name">User</span>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<div id="user-dropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg py-2 z-50">
+<a href="/dashboard.html" class="flex items-center gap-2 px-4 py-2 font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-sm">dashboard</span>Dashboard</a>
+<a href="/app.html" class="flex items-center gap-2 px-4 py-2 font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-sm">center_focus_weak</span>Scan</a>
+<a href="/blog.html" class="flex items-center gap-2 px-4 py-2 font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-sm">article</span>Blog</a>
+<hr class="border-outline-variant my-1">
+<button id="logout-btn" class="w-full flex items-center gap-2 px-4 py-2 font-label-sm text-label-sm text-tertiary hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-sm">logout</span>Sign Out</button>
+</div>
+</div>
+</div>
+</div>
+</nav>
+
+<main class="flex-1 px-margin-mobile md:px-margin-desktop py-8 max-w-container-max mx-auto w-full">
+<div id="loading-state" class="text-center py-20">
+<div class="animate-spin w-10 h-10 border-4 border-secondary border-t-transparent rounded-full mx-auto mb-4"></div>
+<p class="font-body-md text-body-md text-on-surface-variant">Loading article...</p>
+</div>
+<div id="post-content" class="hidden max-w-3xl mx-auto"></div>
+</main>
+
+<footer class="border-t border-outline-variant py-8 text-center font-body-md text-body-md text-on-surface-variant">
+&copy; 2026 StampSnap. All rights reserved.
+</footer>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script>
+const posts = {
+  "rare-stamp-found-at-flea-market": {
+    title: "Rare $25,000 Stamp Found at Flea Market for $1",
+    category: "News",
+    date: "May 20, 2026",
+    image: "https://images.unsplash.com/photo-1585841494632-c9b75b82b140?w=900&h=500&fit=crop",
+    content: `<p>A collector in Ohio made the discovery of a lifetime when they stumbled upon a rare Treskilling Yellow variant at a local flea market, paying just $1 for what turned out to be a $25,000 stamp.</p>
+    <p>The stamp, originally issued in Sweden in 1855, was part of a miscellaneous lot of old stamps. The collector, who wishes to remain anonymous, noticed something unusual about the yellow-orange color and decided to have it authenticated.</p>
+    <p>"I almost walked past that table," the collector told StampSnap. "Something made me stop and look through the box. When I saw the stamp, my heart skipped a beat."</p>
+    <p>The Treskilling Yellow is one of the world's most famous stamp errors. It was originally printed in green, but a small batch was accidentally printed in yellow-orange. Only one copy is known to exist in private hands.</p>
+    <p>The stamp will be auctioned at Sotheby's London next month, with a pre-sale estimate of $20,000-$30,000.</p>`
+  },
+  "stamp-auction-records-2026": {
+    title: "Record-Breaking Stamp Auction: Top 5 Sales of 2026",
+    category: "Auction",
+    date: "May 15, 2026",
+    image: "https://images.unsplash.com/photo-1559589689-577c7d9c7775?w=900&h=500&fit=crop",
+    content: `<p>The 2026 stamp auction season has been nothing short of spectacular. Here are the top five sales that have broken records this year.</p>
+    <h3>1. Inverted Jenny Plate Block — $4.8M</h3>
+    <p>A rare plate block of four Inverted Jenny stamps sold for $4.8 million at Siegel Auction Galleries in March.</p>
+    <h3>2. Mauritius "Post Office" 1d Red — $3.2M</h3>
+    <p>One of the rarest stamps in the world, the Mauritius "Post Office" issue, fetched $3.2 million at a private sale.</p>
+    <h3>3. British Guiana 1c Magenta — $9.5M</h3>
+    <p>The world's most famous rare stamp changed hands again in a private transaction.</p>
+    <h3>4. Hawaiian Missionaries 2c — $2.1M</h3>
+    <p>One of only 16 known examples of this ultra-rare Hawaiian stamp.</p>
+    <h3>5. Treskilling Yellow — $2.8M</h3>
+    <p>The famous color error continues to appreciate in value.</p>`
+  },
+  "how-to-start-stamp-collecting": {
+    title: "How to Start Stamp Collecting: A Beginner's Guide",
+    category: "Guide",
+    date: "May 10, 2026",
+    image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&h=500&fit=crop",
+    content: `<p>Welcome to the wonderful world of philately! Stamp collecting is one of the most rewarding hobbies, combining history, art, and the thrill of discovery.</p>
+    <h3>What You Need to Start</h3>
+    <p><strong>1. A Stamp Album.</strong> A basic beginners album from any philatelic supplier will do. Look for one with printed spaces for world stamps.</p>
+    <p><strong>2. Stamp Tongs.</strong> Never handle stamps with your fingers. The oils on your skin damage them. A good pair of stamp tongs costs under $10.</p>
+    <p><strong>3. A Magnifying Glass.</strong> 10x magnification is standard for examining perforations, watermarks, and printing details.</p>
+    <p><strong>4. StampSnap.</strong> Use our AI-powered identifier to learn about any stamp you find. Just snap a photo!</p>
+    <h3>Where to Find Stamps</h3>
+    <p>Start with family correspondence, visit flea markets and estate sales, join a local stamp club, or buy lots online. The best part of collecting is the hunt.</p>`
+  },
+  "penny-black-history": {
+    title: "The Penny Black: The World's First Postage Stamp",
+    category: "History",
+    date: "May 6, 2026",
+    image: "https://images.unsplash.com/photo-1618164435735-413d3b0663eb?w=900&h=500&fit=crop",
+    content: `<p>On May 6, 1840, the United Kingdom issued the world's first adhesive postage stamp: the Penny Black. Featuring a profile of Queen Victoria, it revolutionized communication.</p>
+    <p>Before the Penny Black, postage was paid by the recipient based on distance and number of sheets. The prepaid adhesive stamp simplified this and was an instant success.</p>
+    <p>Approximately 68 million copies were printed, making it relatively common today. However, examples in fine condition or on original covers can fetch significant sums.</p>
+    <p>The design featured a young Queen Victoria's profile in black ink on a paper background. The stamp was imperforate (no perforations), meaning each stamp had to be cut from the sheet with scissors.</p>`
+  },
+  "stamp-identification-tips": {
+    title: "5 Tips for Better Stamp Identification with AI",
+    category: "Tips",
+    date: "April 28, 2026",
+    image: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=900&h=500&fit=crop",
+    content: `<p>Get the most accurate results from StampSnap's AI identifier with these five simple tips.</p>
+    <h3>1. Use Natural Lighting</h3>
+    <p>Avoid harsh direct sunlight. Natural daylight from a window works best. If using artificial light, a neutral white LED is ideal.</p>
+    <h3>2. Flat Surface, Contrasting Background</h3>
+    <p>Place the stamp flat on a solid, contrasting background. White or light gray works for dark stamps; dark gray for light stamps.</p>
+    <h3>3. Show the Full Perforation</h3>
+    <p>Ensure the entire perforated edge is visible within the frame. Perforation patterns are key identifiers for many stamps.</p>
+    <h3>4. Keep the Camera Steady</h3>
+    <p>When using a phone camera, brace your hand against a surface or use a small tripod to avoid blur.</p>
+    <h3>5. Try Different Angles</h3>
+    <p>If the first scan isn't confident, try again with slight changes in angle and lighting. Different angles reveal different details.</p>`
+  },
+  "upcoming-stamp-exhibitions": {
+    title: "Upcoming Stamp Exhibitions & Shows in 2026",
+    category: "Events",
+    date: "April 20, 2026",
+    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&h=500&fit=crop",
+    content: `<p>Plan your philatelic calendar with these major stamp exhibitions happening in 2026.</p>
+    <h3>World Stamp Show 2026 — London, July 10-17</h3>
+    <p>The premier international stamp exhibition returns to London's Business Design Centre. Over 200 dealers and exhibits from 50 countries.</p>
+    <h3>INPEX 2026 — Pittsburgh, September 5-7</h3>
+    <p>The annual show of the American Philatelic Society features exhibits, dealers, and educational seminars.</p>
+    <h3>EuroPhil 2026 — Vienna, October 20-25</h3>
+    <p>European philatelic exhibition with competitive exhibits from across the continent.</p>
+    <h3>Royal Philatelic Society London — Monthly Meetings</h3>
+    <p>Expert lectures and displays at the RPSL headquarters. Open to visitors.</p>`
+  },
+  "most-valuable-us-stamps": {
+    title: "Top 10 Most Valuable US Stamps Ever Issued",
+    category: "Guide",
+    date: "April 15, 2026",
+    image: "https://images.unsplash.com/photo-1532012197267-da84d127e765?w=900&h=500&fit=crop",
+    content: `<p>American stamps have produced some of the world's most valuable rarities. Here's our top 10.</p>
+    <h3>1. Inverted Jenny (Scott C3a) — $2M+</h3>
+    <p>The famous 1918 airmail error with an upside-down biplane. Only 100 sheets of 100 stamps exist.</p>
+    <h3>2. CIA Invert — $1.2M</h3>
+    <p>A 1979 error from the CIA's internal mail system, showing an inverted center.</p>
+    <h3>3. 1869 24¢ Pictorial Inverted Center — $750K</h3>
+    <p>One of the great US errors showing the scene upside-down.</p>
+    <h3>4. 1901 Pan-American Inverted Center — $500K</h3>
+    <p>A beautiful error from the Pan-American Exposition series.</p>
+    <h3>5. Alexandria "Blue Boy" — $3M+</h3>
+    <p>One of only seven known examples of this provisional stamp.</p>
+    <p>The remaining five on our list include the 1847 10¢ Washington, the 1851 1¢ Franklin, and three 20th-century rarities.</p>`
+  },
+  "digital-stamp-cataloging": {
+    title: "Digital vs. Traditional: How to Catalog Your Stamp Collection",
+    category: "Tips",
+    date: "April 8, 2026",
+    image: "https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?w=900&h=500&fit=crop",
+    content: `<p>The debate between traditional paper albums and digital catalogs is a lively one in philatelic circles. Both approaches have their merits.</p>
+    <h3>Traditional Albums</h3>
+    <p>Paper albums offer the tactile pleasure of handling your stamps and mounting them yourself. They're also display-ready — just open the album and share. High-quality albums from Lindner or Lighthouse are built to last generations.</p>
+    <h3>Digital Catalogs</h3>
+    <p>With StampSnap's collection dashboard, you can catalog unlimited stamps, view your entire collection at a glance, track total portfolio value, and search instantly. Digital catalogs never go out of print and are always accessible from your phone.</p>
+    <h3>Our Verdict: Use Both</h3>
+    <p>Keep your finest stamps in a traditional album for display, and use a digital catalog for inventory management, valuation tracking, and insurance purposes.</p>`
+  },
+  "stamp-forgery-detection": {
+    title: "Spotting Forgeries: How Experts Detect Fake Stamps",
+    category: "History",
+    date: "March 30, 2026",
+    image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=900&h=500&fit=crop",
+    content: `<p>Stamp forgery is as old as stamp collecting itself. The famous "Treskilling Yellow" has been forged countless times. Here's how experts spot fakes.</p>
+    <h3>1. Paper and Gum</h3>
+    <p>Modern paper fluoresces differently under UV light. Experts check the paper's composition and the stamp's original gum (the adhesive).</p>
+    <h3>2. Perforations</h3>
+    <p>Forged perforations often have irregular spacing or wrong gauge. A perforation gauge tool is essential for authentication.</p>
+    <h3>3. Printing Method</h3>
+    <p>Original stamps used specific printing methods (engraved, typographed, lithographed). Forgers often use simpler offset printing that looks different under magnification.</p>
+    <h3>4. Watermark</h3>
+    <p>Forgers frequently get the watermark wrong or omit it entirely. Use watermark fluid to check.</p>
+    <h3>5. Cancellation</h3>
+    <p>Fake cancellations often look too uniform or use wrong-colored ink for the period.</p>
+    <p>When in doubt, have your stamp authenticated by a professional service like the Philatelic Foundation or the RPSL.</p>`
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug');
+  const post = posts[slug];
+  const loading = document.getElementById('loading-state');
+  const container = document.getElementById('post-content');
+
+  if (!post) {
+    loading.innerHTML = `<div class="text-center py-20">
+      <span class="material-symbols-outlined text-6xl text-on-surface-variant mb-4">search_off</span>
+      <h1 class="font-headline-md text-headline-md text-primary mb-4">Article Not Found</h1>
+      <a href="/blog.html" class="bg-primary text-on-primary font-label-sm text-label-sm px-8 py-3 rounded-lg inline-flex items-center gap-2">Back to Blog</a>
+    </div>`;
+    return;
+  }
+
+  loading.classList.add('hidden');
+  container.classList.remove('hidden');
+  container.innerHTML = `
+    <a href="/blog.html" class="inline-flex items-center gap-2 text-primary font-label-sm text-label-sm mb-6 hover:opacity-80 transition-opacity">
+      <span class="material-symbols-outlined text-sm">arrow_back</span> Back to Blog
+    </a>
+    <div class="aspect-[2/1] bg-surface-variant rounded-xl overflow-hidden mb-8">
+      <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover">
+    </div>
+    <div class="flex items-center gap-3 mb-4">
+      <span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider bg-secondary-fixed px-3 py-1 rounded-sm">${post.category}</span>
+      <span class="text-on-surface-variant font-body-md text-sm">${post.date}</span>
+    </div>
+    <h1 class="font-display-lg text-display-lg text-primary mb-8">${post.title}</h1>
+    <div class="prose prose-lg max-w-none font-body-md text-body-md text-on-surface-variant leading-relaxed">
+      ${post.content}
+    </div>
+    <div class="mt-12 pt-8 border-t border-outline-variant">
+      <a href="/blog.html" class="bg-primary text-on-primary font-label-sm text-label-sm px-8 py-3 rounded-lg inline-flex items-center gap-2 hover:opacity-90 transition-opacity">
+        <span class="material-symbols-outlined text-sm">arrow_back</span> More Articles
+      </a>
+    </div>
+  `;
+});
+</script>
+</body>
+</html>
