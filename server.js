@@ -6,15 +6,15 @@ const { getDb } = require('./db');
 
 const app = express();
 
-const cryptomus = require('./services/cryptomus');
+const nowpayments = require('./services/nowpayments');
 
-app.post('/webhook/cryptomus', express.raw({ type: 'application/json' }), async (req, res) => {
+app.post('/webhook/nowpayments', express.raw({ type: 'application/json' }), async (req, res) => {
   try {
-    const sign = req.headers['sign'] || req.headers['Signature'] || req.headers['signature'];
-    await cryptomus.handlePaymentWebhook(req.body.toString(), sign);
+    const signature = req.headers['x-nowpayments-sig'];
+    await nowpayments.handlePaymentWebhook(req.body.toString(), signature);
     res.json({ received: true });
   } catch (err) {
-    console.error('Cryptomus webhook error:', err.message);
+    console.error('NowPayments webhook error:', err.message);
     res.status(400).send(`Webhook Error: ${err.message}`);
   }
 });

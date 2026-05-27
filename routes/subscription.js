@@ -2,30 +2,30 @@ const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const { get, run } = require('../db');
 const { authenticate } = require('../middleware/auth');
-const cryptomus = require('../services/cryptomus');
+const nowpayments = require('../services/nowpayments');
 
 const router = express.Router();
 
 router.post('/create-checkout', authenticate, async (req, res) => {
   try {
-    const merchantId = process.env.CRYPTOMUS_MERCHANT_ID;
-    if (!merchantId || merchantId === 'your_merchant_id') {
-      return res.json({ demo: true, message: 'Cryptomus not configured. In demo mode, subscription would be created.', url: '/dashboard.html?demo=success' });
+    const apiKey = process.env.NOWPAYMENTS_API_KEY;
+    if (!apiKey || apiKey === 'your_nowpayments_api_key') {
+      return res.json({ demo: true, message: 'NowPayments not configured. In demo mode, subscription would be created.', url: '/dashboard.html?demo=success' });
     }
 
     const user = get('SELECT * FROM users WHERE id = ?', [req.user.id]);
     const orderId = `stampsnap_sub_${uuidv4()}`;
 
-    run('UPDATE users SET cryptomus_order_id = ? WHERE id = ?', [orderId, user.id]);
+    run('UPDATE users SET nowpayments_id = ? WHERE id = ?', [orderId, user.id]);
 
-    const payment = await cryptomus.createPayment({
+    const invoice = await nowpayments.createInvoice({
       amount: 5.45,
       orderId,
       userId: user.id,
       userEmail: user.email
     });
 
-    res.json({ url: payment.url });
+    res.json({ url: invoice.invoice_url });
   } catch (err) {
     console.error('Checkout error:', err);
     res.status(500).json({ error: 'Failed to create checkout session' });
@@ -34,7 +34,7 @@ router.post('/create-checkout', authenticate, async (req, res) => {
 
 router.post('/cancel', authenticate, (req, res) => {
   try {
-    run(`UPDATE users SET subscription_status = 'canceled', subscription_end = NULL, cryptomus_order_id = NULL, scans_limit = 5 WHERE id = ?`, [req.user.id]);
+    run(`UPDATE users SET subscription_status = 'canceled', subscription_end = NULL, nowpayments_id = NULL, scans_limit = 5 WHERE id = ?`, [req.user.id]);
     res.json({ success: true });
   } catch (err) {
     console.error('Cancel error:', err);

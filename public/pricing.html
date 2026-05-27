@@ -105,7 +105,7 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#
 </div>
 <div class="flex items-start gap-4">
 <span class="material-symbols-outlined text-secondary">lock</span>
-<div><h4 class="font-label-sm text-label-sm text-primary">Secure Payments</h4><p class="font-body-md text-body-md text-on-surface-variant text-sm">All payments are processed securely via Cryptomus.</p></div>
+<div><h4 class="font-label-sm text-label-sm text-primary">Secure Payments</h4><p class="font-body-md text-body-md text-on-surface-variant text-sm">All payments are processed securely via NowPayments.</p></div>
 </div>
 <div class="flex items-start gap-4">
 <span class="material-symbols-outlined text-secondary">support</span>
@@ -150,7 +150,7 @@ async function handleSubscribe() {
   try {
     const data = await apiRequest('/subscription/create-checkout', { method: 'POST' });
     if (data.demo) {
-      alert('Demo mode activated! Subscribe via Cryptomus in production.');
+      alert('Demo mode activated! Subscribe via NowPayments in production.');
       window.location.href = '/dashboard.html';
     } else if (data.url) {
       window.location.href = data.url;
