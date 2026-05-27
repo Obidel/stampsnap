@@ -1,45 +1,66 @@
 const express = require('express');
-const { get } = require('../db');
+const { v4: uuidv4 } = require('uuid');
+const { get, run } = require('../db');
 const { authenticate } = require('../middleware/auth');
-const { createCheckoutSession, createPortalSession } = require('../services/stripe');
+const cryptomus = require('../services/cryptomus');
 
 const router = express.Router();
 
 router.post('/create-checkout', authenticate, async (req, res) => {
   try {
-    const priceId = process.env.STRIPE_PRICE_ID;
-    if (!priceId || priceId === 'price_placeholder') {
-      return res.json({ demo: true, message: 'Stripe not configured. In demo mode, subscription would be created.', url: '/pricing.html?demo=success' });
+    const merchantId = process.env.CRYPTOMUS_MERCHANT_ID;
+    if (!merchantId || merchantId === 'your_merchant_id') {
+      return res.json({ demo: true, message: 'Cryptomus not configured. In demo mode, subscription would be created.', url: '/dashboard.html?demo=success' });
     }
-    const session = await createCheckoutSession(req.user, priceId);
-    res.json({ url: session.url });
+
+    const user = get('SELECT * FROM users WHERE id = ?', [req.user.id]);
+    const orderId = `stampsnap_sub_${uuidv4()}`;
+
+    run('UPDATE users SET cryptomus_order_id = ? WHERE id = ?', [orderId, user.id]);
+
+    const payment = await cryptomus.createPayment({
+      amount: 5.45,
+      orderId,
+      userId: user.id,
+      userEmail: user.email
+    });
+
+    res.json({ url: payment.url });
   } catch (err) {
     console.error('Checkout error:', err);
     res.status(500).json({ error: 'Failed to create checkout session' });
   }
 });
 
-router.post('/portal', authenticate, async (req, res) => {
+router.post('/cancel', authenticate, (req, res) => {
   try {
-    const user = get('SELECT * FROM users WHERE id = ?', [req.user.id]);
-    if (!user.stripe_customer_id) {
-      return res.status(400).json({ error: 'No active subscription found' });
-    }
-    const session = await createPortalSession(user.stripe_customer_id);
-    res.json({ url: session.url });
+    run(`UPDATE users SET subscription_status = 'canceled', subscription_end = NULL, cryptomus_order_id = NULL, scans_limit = 5 WHERE id = ?`, [req.user.id]);
+    res.json({ success: true });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to create portal session' });
+    console.error('Cancel error:', err);
+    res.status(500).json({ error: 'Failed to cancel subscription' });
   }
 });
 
 router.get('/status', authenticate, (req, res) => {
-  const user = get('SELECT subscription_status, trial_end, scans_used, scans_limit FROM users WHERE id = ?', [req.user.id]);
+  const user = get('SELECT * FROM users WHERE id = ?', [req.user.id]);
+
+  let status = user.subscription_status;
+  if (status === 'active' && user.subscription_end) {
+    if (new Date(user.subscription_end) < new Date()) {
+      run('UPDATE users SET subscription_status = ?, scans_limit = 5 WHERE id = ?', ['expired', user.id]);
+      status = 'expired';
+    }
+  }
+
   const trialActive = user.trial_end && new Date(user.trial_end) > new Date();
-  const isActive = user.subscription_status === 'active' || user.subscription_status === 'trialing' || trialActive;
+  const isActive = status === 'active' || status === 'trialing' || trialActive;
   const trialDaysLeft = trialActive ? Math.ceil((new Date(user.trial_end) - new Date()) / (1000 * 60 * 60 * 24)) : 0;
+
   res.json({
-    status: user.subscription_status,
+    status,
     trial_end: user.trial_end,
+    subscription_end: user.subscription_end,
     trial_active: trialActive,
     trial_days_left: trialDaysLeft,
     is_active: isActive,

@@ -6,17 +6,15 @@ const { getDb } = require('./db');
 
 const app = express();
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const { handleWebhookEvent } = require('./services/stripe');
+const cryptomus = require('./services/cryptomus');
 
-app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
-  const sig = req.headers['stripe-signature'];
+app.post('/webhook/cryptomus', express.raw({ type: 'application/json' }), async (req, res) => {
   try {
-    const event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
-    await handleWebhookEvent(event);
+    const sign = req.headers['sign'] || req.headers['Signature'] || req.headers['signature'];
+    await cryptomus.handlePaymentWebhook(req.body.toString(), sign);
     res.json({ received: true });
   } catch (err) {
-    console.error('Webhook error:', err.message);
+    console.error('Cryptomus webhook error:', err.message);
     res.status(400).send(`Webhook Error: ${err.message}`);
   }
 });

@@ -27,6 +27,8 @@ async function getDb() {
     subscription_status TEXT DEFAULT 'trial',
     stripe_customer_id TEXT,
     stripe_subscription_id TEXT,
+    cryptomus_order_id TEXT,
+    subscription_end TEXT,
     scans_used INTEGER DEFAULT 0,
     scans_limit INTEGER DEFAULT 5
   )`);
@@ -60,6 +62,10 @@ async function getDb() {
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (stamp_id) REFERENCES stamps(id)
   )`);
+  // Migration for existing databases
+  try { db.run(`ALTER TABLE users ADD COLUMN cryptomus_order_id TEXT`); } catch (e) {}
+  try { db.run(`ALTER TABLE users ADD COLUMN subscription_end TEXT`); } catch (e) {}
+
   saveDb();
   return db;
 }

@@ -95,6 +95,17 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#
 </div>
 </div>
 </section>
+<section id="sub-management" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 soft-shadow hidden">
+  <div class="flex items-center justify-between">
+    <div>
+      <h3 class="font-headline-md text-headline-md text-primary mb-1">Subscription</h3>
+      <p class="font-body-md text-body-md text-on-surface-variant" id="sub-detail">Active</p>
+    </div>
+    <button id="cancel-sub-btn" onclick="cancelSubscription()" class="bg-error-container text-on-error-container font-label-sm text-label-sm px-4 py-2 rounded-lg hover:opacity-90 transition-all hidden flex items-center gap-2">
+      <span class="material-symbols-outlined text-sm">cancel</span> Cancel Subscription
+    </button>
+  </div>
+</section>
 <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter pb-12" id="collection-grid">
 <p class="font-body-md text-body-md text-on-surface-variant col-span-full text-center py-12">Loading your collection...</p>
 </section>
@@ -115,6 +126,18 @@ async function loadDashboard() {
       document.getElementById('sub-status').textContent = 'Premium Member';
     } else {
       document.getElementById('sub-status').textContent = 'Free Member';
+    }
+    // Show subscription management for active/paying users
+    const subMgmt = document.getElementById('sub-management');
+    const cancelBtn = document.getElementById('cancel-sub-btn');
+    const subDetail = document.getElementById('sub-detail');
+    if (subData.status === 'active') {
+      subMgmt.classList.remove('hidden');
+      cancelBtn.classList.remove('hidden');
+      subDetail.textContent = `Premium — renews ${new Date(subData.subscription_end).toLocaleDateString()}`;
+    } else if (subData.status === 'expired') {
+      subMgmt.classList.remove('hidden');
+      subDetail.textContent = 'Expired — renew to keep premium features';
     }
     const data = await apiRequest('/stamps/collection');
     const grid = document.getElementById('collection-grid');
@@ -159,6 +182,24 @@ async function loadDashboard() {
     console.error('Dashboard error:', err);
   }
 }
+async function cancelSubscription() {
+  if (!confirm('Are you sure you want to cancel your subscription?')) return;
+  try {
+    await apiRequest('/subscription/cancel', { method: 'POST' });
+    alert('Subscription cancelled.');
+    location.reload();
+  } catch (err) {
+    alert('Cancel error: ' + err.message);
+  }
+}
+
+// Handle redirect from Cryptomus success
+document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('demo') === 'success') {
+    alert('Subscription demo activated! Configure Cryptomus merchant ID for live payments.');
+  }
+});
 document.addEventListener('DOMContentLoaded', loadDashboard);
 </script>
 </body>
