@@ -35,6 +35,7 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#
 function renderResult(result) {
   const container = document.getElementById('result-container');
   const s = result.stamp;
+  const userImage = sessionStorage.getItem('last_scan_image');
   if (!result.identified || !s) {
     container.innerHTML = `
       <div class="text-center py-20">
@@ -68,7 +69,7 @@ function renderResult(result) {
         <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_4px_20px_rgba(26,54,93,0.05)] overflow-hidden paper-texture">
           <div class="p-6 flex items-center justify-center min-h-[400px] bg-surface-container-low">
             <div class="relative p-4 bg-white shadow-md border border-surface-variant">
-              <img src="${s.image_url || 'https://via.placeholder.com/400x500?text=Stamp'}" alt="${s.name}" class="w-full h-auto object-contain max-h-[500px]">
+              <img src="${userImage || s.image_url || 'https://via.placeholder.com/400x500?text=Stamp'}" alt="${s.name}" class="w-full h-auto object-contain max-h-[500px]">
             </div>
           </div>
           <div class="p-4 border-t border-outline-variant bg-surface flex justify-between items-center">

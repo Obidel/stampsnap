@@ -219,6 +219,12 @@ async function handleScan() {
     await new Promise(r => setTimeout(r, 800));
     statusText.textContent = 'Matching catalog entries...';
     await new Promise(r => setTimeout(r, 800));
+    const reader = new FileReader();
+    const imageDataUrl = await new Promise(resolve => {
+      reader.onload = () => resolve(reader.result);
+      reader.readAsDataURL(imageBlob);
+    });
+    sessionStorage.setItem('last_scan_image', imageDataUrl);
     const formData = new FormData();
     formData.append('image', imageBlob, 'stamp.jpg');
     const result = await apiUpload('/stamps/identify', formData);

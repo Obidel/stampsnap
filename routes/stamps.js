@@ -38,13 +38,23 @@ router.post('/identify', authenticate, upload.single('image'), async (req, res) 
     const result = await identifyStamp(imageBuffer);
     let stampId = null;
     if (result.identified && result.stamp) {
-      stampId = result.stamp.id;
-      run(`INSERT INTO stamps (id, user_id, image_path, name, country, year, estimated_value, rarity_score, condition, catalog_number, perforation, watermark, color, denomination, description, confidence)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [stampId, user.id, req.file?.path || null, result.stamp.name, result.stamp.country, result.stamp.year,
-          result.stamp.estimated_value, result.stamp.rarity_score, result.stamp.condition, result.stamp.catalog_number,
-          result.stamp.perforation, result.stamp.watermark, result.stamp.color, result.stamp.denomination,
-          result.stamp.description, result.confidence]);
+      const existing = get('SELECT id FROM stamps WHERE user_id = ? AND name = ?', [user.id, result.stamp.name]);
+      if (existing) {
+        stampId = existing.id;
+        run(`UPDATE stamps SET image_path=?, country=?, year=?, estimated_value=?, rarity_score=?, condition=?, catalog_number=?, perforation=?, watermark=?, color=?, denomination=?, description=?, confidence=? WHERE id=?`,
+          [req.file?.path || null, result.stamp.country, result.stamp.year,
+            result.stamp.estimated_value, result.stamp.rarity_score, result.stamp.condition, result.stamp.catalog_number,
+            result.stamp.perforation, result.stamp.watermark, result.stamp.color, result.stamp.denomination,
+            result.stamp.description, result.confidence, stampId]);
+      } else {
+        stampId = result.stamp.id;
+        run(`INSERT INTO stamps (id, user_id, image_path, name, country, year, estimated_value, rarity_score, condition, catalog_number, perforation, watermark, color, denomination, description, confidence)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [stampId, user.id, req.file?.path || null, result.stamp.name, result.stamp.country, result.stamp.year,
+            result.stamp.estimated_value, result.stamp.rarity_score, result.stamp.condition, result.stamp.catalog_number,
+            result.stamp.perforation, result.stamp.watermark, result.stamp.color, result.stamp.denomination,
+            result.stamp.description, result.confidence]);
+      }
     }
     const scanId = uuidv4();
     run('INSERT INTO scan_history (id, user_id, stamp_id, status, confidence) VALUES (?, ?, ?, ?, ?)',
