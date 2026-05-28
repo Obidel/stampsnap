@@ -29,6 +29,7 @@ async function getDb() {
     stripe_subscription_id TEXT,
     cryptomus_order_id TEXT,
     nowpayments_id TEXT,
+    donation_code TEXT,
     subscription_end TEXT,
     scans_used INTEGER DEFAULT 0,
     scans_limit INTEGER DEFAULT 5
@@ -64,7 +65,7 @@ async function getDb() {
     FOREIGN KEY (stamp_id) REFERENCES stamps(id)
   )`);
   try { db.run(`ALTER TABLE users ADD COLUMN subscription_end TEXT`); } catch (e) {}
-  try { db.run(`ALTER TABLE users ADD COLUMN nowpayments_id TEXT`); } catch (e) {}
+  try { db.run(`ALTER TABLE users ADD COLUMN donation_code TEXT`); } catch (e) {}
 
   saveDb();
   return db;

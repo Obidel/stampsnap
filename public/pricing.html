@@ -105,7 +105,7 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#
 </div>
 <div class="flex items-start gap-4">
 <span class="material-symbols-outlined text-secondary">lock</span>
-<div><h4 class="font-label-sm text-label-sm text-primary">Secure Payments</h4><p class="font-body-md text-body-md text-on-surface-variant text-sm">All payments are processed securely via NowPayments.</p></div>
+<div><h4 class="font-label-sm text-label-sm text-primary">Secure Payments</h4><p class="font-body-md text-body-md text-on-surface-variant text-sm">Payments are processed via DonationAlerts.</p></div>
 </div>
 <div class="flex items-start gap-4">
 <span class="material-symbols-outlined text-secondary">support</span>
@@ -115,6 +115,29 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#
 </div>
 </section>
 </main>
+<div id="donation-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+  <div class="bg-surface-container-lowest max-w-md w-full mx-4 p-8 rounded-xl shadow-xl border border-outline-variant soft-shadow">
+    <h3 class="font-headline-md text-headline-md text-primary mb-4">Almost there!</h3>
+    <p class="font-body-md text-body-md text-on-surface-variant mb-4">Send <strong>$5.45</strong> via DonationAlerts to activate Premium.</p>
+    <div class="bg-surface-container p-4 rounded-lg mb-4 text-center">
+      <p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Your code</p>
+      <p id="donation-code" class="font-stats-numeric text-stats-numeric text-primary text-xl select-all"></p>
+    </div>
+    <ol class="font-body-md text-body-md text-on-surface-variant space-y-2 mb-6 list-decimal list-inside">
+      <li>Click the button below to go to DonationAlerts</li>
+      <li>Enter amount <strong>$5.45</strong></li>
+      <li>Paste the code in the <strong>message</strong> field</li>
+      <li>Pay with your card</li>
+      <li>Come back and click "I've Paid"</li>
+    </ol>
+    <div class="flex flex-col gap-3">
+      <a id="donation-link" href="#" target="_blank" class="bg-secondary text-on-secondary font-label-sm text-label-sm py-3 rounded-lg text-center hover:opacity-90 transition-all">Go to DonationAlerts</a>
+      <button onclick="claimPremium()" class="bg-primary text-on-primary font-label-sm text-label-sm py-3 rounded-lg hover:opacity-90 transition-all">I've Paid — Activate Premium</button>
+      <input id="claim-code" type="hidden" value="">
+      <button onclick="document.getElementById('donation-modal').classList.add('hidden')" class="font-label-sm text-label-sm text-on-surface-variant py-2 hover:text-primary transition-colors">Cancel</button>
+    </div>
+  </div>
+</div>
 <footer class="bg-surface-container-highest border-t border-dashed border-outline-variant w-full py-12 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-gutter">
 <div class="col-span-1 md:col-span-1">
 <span class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary tracking-tighter block mb-4">StampSnap</span>
@@ -150,17 +173,36 @@ async function handleSubscribe() {
   try {
     const data = await apiRequest('/subscription/create-checkout', { method: 'POST' });
     if (data.demo) {
-      alert('Demo mode activated! Subscribe via NowPayments in production.');
+      alert('Demo mode activated. Configure DonationAlerts in production.');
       window.location.href = '/dashboard.html';
-    } else if (data.url) {
-      window.location.href = data.url;
+      return;
     }
+    showDonationModal(data.code, data.url);
   } catch (err) {
-    alert('Subscription error: ' + err.message);
+    alert('Error: ' + err.message);
   } finally {
     btn.disabled = false;
     btnText.classList.remove('hidden');
     btnSpinner.classList.add('hidden');
+  }
+}
+function showDonationModal(code, daUrl) {
+  const overlay = document.getElementById('donation-modal');
+  document.getElementById('donation-code').textContent = code;
+  document.getElementById('donation-link').href = daUrl;
+  document.getElementById('claim-code').value = code;
+  overlay.classList.remove('hidden');
+}
+async function claimPremium() {
+  const code = document.getElementById('claim-code').value;
+  try {
+    const data = await apiRequest('/subscription/claim', { method: 'POST', body: JSON.stringify({ code }) });
+    if (data.success) {
+      alert('Premium activated! Welcome to Premium.');
+      window.location.href = '/dashboard.html';
+    }
+  } catch (err) {
+    alert('Claim error: ' + err.message);
   }
 }
 </script>

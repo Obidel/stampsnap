@@ -2,39 +2,47 @@ const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const { get, run } = require('../db');
 const { authenticate } = require('../middleware/auth');
-const nowpayments = require('../services/nowpayments');
 
 const router = express.Router();
 
-router.post('/create-checkout', authenticate, async (req, res) => {
+router.post('/create-checkout', authenticate, (req, res) => {
   try {
-    const apiKey = process.env.NOWPAYMENTS_API_KEY;
-    if (!apiKey || apiKey === 'your_nowpayments_api_key') {
-      return res.json({ demo: true, message: 'NowPayments not configured. In demo mode, subscription would be created.', url: '/dashboard.html?demo=success' });
+    const alias = process.env.DONATIONALERTS_ALIAS;
+    if (!alias || alias === 'your_donationalerts_alias') {
+      return res.json({ demo: true, message: 'DonationAlerts not configured. Demo mode.', url: '/dashboard.html?demo=success' });
     }
 
-    const user = get('SELECT * FROM users WHERE id = ?', [req.user.id]);
-    const orderId = `stampsnap_sub_${uuidv4()}`;
+    const code = `stamp-${uuidv4().split('-')[0]}`;
+    run('UPDATE users SET donation_code = ? WHERE id = ?', [code, req.user.id]);
 
-    run('UPDATE users SET nowpayments_id = ? WHERE id = ?', [orderId, user.id]);
-
-    const invoice = await nowpayments.createInvoice({
-      amount: 5.45,
-      orderId,
-      userId: user.id,
-      userEmail: user.email
-    });
-
-    res.json({ url: invoice.invoice_url });
+    const daUrl = `https://www.donationalerts.com/r/${alias}`;
+    res.json({ url: daUrl, code, message: `Send $5.45 on DonationAlerts. Include code ${code} in the message to activate premium.` });
   } catch (err) {
     console.error('Checkout error:', err);
-    res.status(500).json({ error: 'Failed to create checkout session' });
+    res.status(500).json({ error: 'Failed to create checkout' });
+  }
+});
+
+router.post('/claim', authenticate, async (req, res) => {
+  try {
+    const code = req.body?.code;
+    if (!code) return res.status(400).json({ error: 'Code required' });
+
+    const user = get('SELECT * FROM users WHERE id = ?', [req.user.id]);
+    if (!user || user.donation_code !== code) {
+      return res.status(400).json({ error: 'Invalid code' });
+    }
+
+    run(`UPDATE users SET subscription_status = 'active', subscription_end = datetime('now', '+30 days'), scans_limit = 999999, donation_code = NULL WHERE id = ?`, [req.user.id]);
+    res.json({ success: true, message: 'Premium activated!' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to activate premium' });
   }
 });
 
 router.post('/cancel', authenticate, (req, res) => {
   try {
-    run(`UPDATE users SET subscription_status = 'canceled', subscription_end = NULL, nowpayments_id = NULL, scans_limit = 5 WHERE id = ?`, [req.user.id]);
+    run(`UPDATE users SET subscription_status = 'canceled', subscription_end = NULL, donation_code = NULL, scans_limit = 5 WHERE id = ?`, [req.user.id]);
     res.json({ success: true });
   } catch (err) {
     console.error('Cancel error:', err);

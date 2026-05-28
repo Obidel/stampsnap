@@ -6,15 +6,17 @@ const { getDb } = require('./db');
 
 const app = express();
 
-const nowpayments = require('./services/nowpayments');
+const donationalerts = require('./services/donationalerts');
 
-app.post('/webhook/nowpayments', express.raw({ type: 'application/json' }), async (req, res) => {
+app.post('/webhook/donationalerts', express.raw({ type: 'application/json' }), async (req, res) => {
   try {
-    const signature = req.headers['x-nowpayments-sig'];
-    await nowpayments.handlePaymentWebhook(req.body.toString(), signature);
+    const result = await donationalerts.handleWebhook(req.body.toString(), req.query.secret);
+    if (result.activated) {
+      console.log('Premium activated via DonationAlerts');
+    }
     res.json({ received: true });
   } catch (err) {
-    console.error('NowPayments webhook error:', err.message);
+    console.error('DonationAlerts webhook error:', err.message);
     res.status(400).send(`Webhook Error: ${err.message}`);
   }
 });
