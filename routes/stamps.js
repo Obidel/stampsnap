@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 const fs = require('fs');
 const { get, run, query } = require('../db');
-const { authenticate, requireSubscription } = require('../middleware/auth');
+const { authenticate } = require('../middleware/auth');
 const { identifyStamp } = require('../services/stampIdentifier');
 
 const router = express.Router();
@@ -29,11 +29,6 @@ const upload = multer({
 router.post('/identify', authenticate, upload.single('image'), async (req, res) => {
   try {
     const user = req.user;
-    const trialActive = user.trial_end && new Date(user.trial_end) > new Date();
-    const isSubscribed = user.subscription_status === 'active' || user.subscription_status === 'trialing';
-    if (!isSubscribed && !trialActive && user.scans_used >= user.scans_limit) {
-      return res.status(403).json({ error: 'Scan limit reached. Subscribe to continue.', code: 'SCAN_LIMIT' });
-    }
     const imageBuffer = req.file ? fs.readFileSync(req.file.path) : null;
     const result = await identifyStamp(imageBuffer);
     let stampId = null;
@@ -59,9 +54,7 @@ router.post('/identify', authenticate, upload.single('image'), async (req, res) 
     const scanId = uuidv4();
     run('INSERT INTO scan_history (id, user_id, stamp_id, status, confidence) VALUES (?, ?, ?, ?, ?)',
       [scanId, user.id, stampId, result.identified ? 'completed' : 'partial', result.confidence]);
-    if (!isSubscribed && !trialActive) {
-      run('UPDATE users SET scans_used = scans_used + 1 WHERE id = ?', [user.id]);
-    }
+    run('UPDATE users SET scans_used = scans_used + 1 WHERE id = ?', [user.id]);
     res.json(result);
   } catch (err) {
     console.error('Identify error:', err);

@@ -21,7 +21,7 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#
 <a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-sm text-label-sm" href="/app.html">AI Scan</a>
       <a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="/blog.html">Blog</a>
       <a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="/dashboard.html">Collection</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="/pricing.html">Pricing</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="/donation.html">Donation</a>
 <a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="/contact.html">Contact Us</a>
 </div>
 </div>
@@ -107,11 +107,16 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#
 <li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-lg mt-0.5" style="font-variation-settings:'FILL' 1;">check_circle</span><span>Place the stamp flat on a solid, contrasting background.</span></li>
 <li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-lg mt-0.5" style="font-variation-settings:'FILL' 1;">check_circle</span><span>Ensure the entire perforated edge is visible within the frame.</span></li>
 </ul>
-</div>
-<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-surface-variant flex-1 flex flex-col overflow-hidden">
-<div class="p-4 border-b border-surface-container-low flex justify-between items-center perforated-border pb-4">
-<h3 class="font-label-sm text-label-sm text-primary uppercase">Recent Activity</h3>
-</div>
+  </div>
+  <a href="https://www.donationalerts.com/r/StampSnap" target="_blank" rel="noopener" class="bg-secondary text-on-secondary rounded-xl p-6 shadow-sm border border-secondary-fixed-dim hover:opacity-90 transition-all block text-center">
+    <span class="material-symbols-outlined text-3xl mb-2 block" style="font-variation-settings:'FILL' 1;">favorite</span>
+    <p class="font-label-sm text-label-sm font-semibold">Support StampSnap</p>
+    <p class="font-body-md text-body-md text-sm opacity-80 mt-1">Donate via DonationAlerts</p>
+  </a>
+  <div class="bg-surface-container-lowest rounded-xl shadow-sm border border-surface-variant flex-1 flex flex-col overflow-hidden">
+    <div class="p-4 border-b border-surface-container-low flex justify-between items-center perforated-border pb-4">
+      <h3 class="font-label-sm text-label-sm text-primary uppercase">Recent Activity</h3>
+    </div>
 <div class="flex-1 overflow-y-auto p-4 space-y-4" id="recent-activity">
 <p class="font-body-md text-body-md text-on-surface-variant text-center py-8">Sign in to see your scan history</p>
 </div>
@@ -214,10 +219,6 @@ async function handleScan() {
       imageBlob = await captureFrame(video);
     }
     if (!imageBlob) { throw new Error('No image selected'); }
-    const statusData = await checkSubscription();
-    if (!statusData.is_active) {
-      statusText.textContent = 'Checking subscription...';
-    }
     statusText.textContent = 'Analyzing perforations...';
     await new Promise(r => setTimeout(r, 800));
     statusText.textContent = 'Matching catalog entries...';

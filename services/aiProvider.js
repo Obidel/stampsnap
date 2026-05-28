@@ -6,7 +6,7 @@ const HF_API_KEY = process.env.HUGGINGFACE_API_KEY;
 const OR_API_KEY = process.env.OPENROUTER_API_KEY;
 const OLLAMA_URL = process.env.OLLAMA_URL || 'http://localhost:11434';
 
-const STAMP_PROMPT = 'You are a stamp expert. Identify this postage stamp from the image. Respond with ONLY valid JSON (no markdown, no backticks): {"name":"","country":"","year":"","estimated_value_low":0,"estimated_value_high":0,"rarity_score":0,"condition":"","catalog_number":"","color":"","denomination":"","description":"","confidence":0.0}';
+const STAMP_PROMPT = 'You are a stamp expert. Identify this postage stamp from the image. Be precise — value range must be narrow (±10% max). Respond with ONLY valid JSON (no markdown, no backticks): {"name":"","country":"","year":"","estimated_value_low":0,"estimated_value_high":0,"rarity_score":0,"condition":"","catalog_number":"","color":"","denomination":"","description":"","confidence":0.0}';
 
 function parseJsonResponse(text) {
   try {

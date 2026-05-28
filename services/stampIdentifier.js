@@ -6,8 +6,8 @@ const stampDatabase = [
     name: 'Penny Black',
     country: 'United Kingdom',
     year: '1840',
-    estimated_value_low: 2500,
-    estimated_value_high: 3800,
+    estimated_value_low: 2800,
+    estimated_value_high: 3200,
     rarity_score: 9,
     condition: 'Fine (Used)',
     catalog_number: 'SG 1',
@@ -23,8 +23,8 @@ const stampDatabase = [
     name: 'Two Pence Blue Mauritius',
     country: 'Mauritius',
     year: '1847',
-    estimated_value_low: 6200,
-    estimated_value_high: 8500,
+    estimated_value_low: 7000,
+    estimated_value_high: 7800,
     rarity_score: 9.5,
     condition: 'Fine (Used)',
     catalog_number: 'SG 3',
@@ -40,8 +40,8 @@ const stampDatabase = [
     name: 'Inverted Jenny',
     country: 'United States',
     year: '1918',
-    estimated_value_low: 1500,
-    estimated_value_high: 1750,
+    estimated_value_low: 1550,
+    estimated_value_high: 1700,
     rarity_score: 8.5,
     condition: 'Very Fine (Mint)',
     catalog_number: 'Scott C3a',
@@ -57,8 +57,8 @@ const stampDatabase = [
     name: 'Red Mercury',
     country: 'Austria',
     year: '1851',
-    estimated_value_low: 800,
-    estimated_value_high: 1200,
+    estimated_value_low: 900,
+    estimated_value_high: 1100,
     rarity_score: 7,
     condition: 'Fine (Used)',
     catalog_number: 'SG 7',
@@ -74,8 +74,8 @@ const stampDatabase = [
     name: 'Blue Boy',
     country: 'United States',
     year: '1846',
-    estimated_value_low: 3000,
-    estimated_value_high: 5000,
+    estimated_value_low: 3600,
+    estimated_value_high: 4200,
     rarity_score: 9,
     condition: 'Fine (Mint)',
     catalog_number: 'Scott 2X1',
@@ -91,8 +91,8 @@ const stampDatabase = [
     name: 'Treskilling Yellow',
     country: 'Sweden',
     year: '1855',
-    estimated_value_low: 10000,
-    estimated_value_high: 25000,
+    estimated_value_low: 16000,
+    estimated_value_high: 19000,
     rarity_score: 10,
     condition: 'Fine (Used)',
     catalog_number: 'SG 1a',
@@ -122,7 +122,7 @@ function fallbackIdentify(imageBuffer) {
   const isIdentified = top.score > 0.25;
 
   const avgValue = (top.stamp.estimated_value_low + top.stamp.estimated_value_high) / 2;
-  const valueVariation = (Math.random() - 0.5) * 0.2;
+  const valueVariation = (Math.random() - 0.5) * 0.06;
   const estimatedValue = Math.round(avgValue * (1 + valueVariation));
 
   return {

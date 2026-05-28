@@ -26,15 +26,6 @@ function updateNavForAuth() {
   }
 }
 
-async function checkSubscription() {
-  try {
-    const data = await apiRequest('/subscription/status');
-    return data;
-  } catch {
-    return { is_active: true, trial_active: false, status: 'unknown' };
-  }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   updateNavForAuth();
   const logoutBtn = document.getElementById('logout-btn');

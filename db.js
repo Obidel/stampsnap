@@ -22,17 +22,7 @@ async function getDb() {
     password TEXT NOT NULL,
     name TEXT NOT NULL,
     created_at TEXT DEFAULT (datetime('now')),
-    trial_start TEXT DEFAULT (datetime('now')),
-    trial_end TEXT DEFAULT (datetime('now', '+3 days')),
-    subscription_status TEXT DEFAULT 'trial',
-    stripe_customer_id TEXT,
-    stripe_subscription_id TEXT,
-    cryptomus_order_id TEXT,
-    nowpayments_id TEXT,
-    donation_code TEXT,
-    subscription_end TEXT,
-    scans_used INTEGER DEFAULT 0,
-    scans_limit INTEGER DEFAULT 5
+    scans_used INTEGER DEFAULT 0
   )`);
   db.run(`CREATE TABLE IF NOT EXISTS stamps (
     id TEXT PRIMARY KEY,
@@ -64,8 +54,6 @@ async function getDb() {
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (stamp_id) REFERENCES stamps(id)
   )`);
-  try { db.run(`ALTER TABLE users ADD COLUMN subscription_end TEXT`); } catch (e) {}
-  try { db.run(`ALTER TABLE users ADD COLUMN donation_code TEXT`); } catch (e) {}
 
   saveDb();
   return db;

@@ -20,7 +20,7 @@ router.post('/signup', (req, res) => {
   const id = uuidv4();
   run('INSERT INTO users (id, email, password, name) VALUES (?, ?, ?, ?)', [id, email, hashed, name]);
   const token = jwt.sign({ userId: id }, process.env.JWT_SECRET, { expiresIn: '30d' });
-  const user = get('SELECT id, email, name, subscription_status, trial_end, scans_used, scans_limit FROM users WHERE id = ?', [id]);
+  const user = get('SELECT id, email, name, scans_used FROM users WHERE id = ?', [id]);
   res.status(201).json({ token, user });
 });
 

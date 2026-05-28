@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script>
-tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#271900",secondary:"#7b5800","surface-container":"#ebeef0",surface:"#f7fafc",tertiary:"#46070b","inverse-primary":"#adc7f7","surface-bright":"#f7fafc","tertiary-fixed-dim":"#ffb3b0","primary-container":"#1a365d","surface-variant":"#e0e3e5","surface-dim":"#d7dadc","on-secondary-container":"#715000","on-error-container":"#93000a","secondary-fixed":"#ffdea6",background:"#f7fafc","error-container":"#ffdad6","tertiary-container":"#631d1e",error:"#ba1a1a",outline:"#74777f","inverse-surface":"#2d3133","surface-container-low":"#f1f4f6","inverse-on-surface":"#eef1f3","surface-container-lowest":"#ffffff","on-error":"#ffffff","on-primary-fixed-variant":"#2d476f","tertiary-fixed":"#ffdad8","on-tertiary-fixed":"#3f0307","outline-variant":"#c4c6cf","primary-fixed-dim":"#adc7f7","on-surface":"#181c1e","on-secondary":"#ffffff","surface-container-high":"#e5e9eb","on-tertiary":"#ffffff","primary-fixed":"#d6e3ff","on-surface-variant":"#43474e","on-background":"#181c1e","surface-tint":"#455f88","surface-container-highest":"#e0e3e5","on-primary-container":"#86a0cd","on-primary":"#ffffff",primary:"#002045","on-primary-fixed":"#001b3c","on-secondary-fixed-variant":"#5d4200","on-tertiary-fixed-variant":"#792e2e","secondary-container":"#fdc34d","on-tertiary-container":"#e5837f","secondary-fixed-dim":"#f7bd48"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"container-max":"1200px","margin-mobile":"20px","margin-desktop":"40px",unit:"8px",gutter:"16px"},fontFamily:{"stats-numeric":["Inter"],"label-sm":["Inter"],"display-lg":["Playfair Display"],"body-lg":["Inter"],"headline-md":["Playfair Display"],"body-md":["Inter"],"display-lg-mobile":["Playfair Display"]},fontSize:{"stats-numeric":["20px",{lineHeight:"24px",fontWeight:"700"}],"label-sm":["12px",{lineHeight:"16px",letterSpacing:"0.05em",fontWeight:"600"}],"display-lg":["48px",{lineHeight:"56px",letterSpacing:"-0.02em",fontWeight:"700"}],"body-lg":["18px",{lineHeight:"28px",fontWeight:"400"}],"headline-md":["24px",{lineHeight:"32px",fontWeight:"600"}],"body-md":["16px",{lineHeight:"24px",fontWeight:"400"}],"display-lg-mobile":["32px",{lineHeight:"40px",fontWeight:"700"}]}}}}
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#271900",secondary:"#7b5800","surface-container":"#ebeef0",surface:"#f7fafc",tertiary:"#46070b","inverse-primary":"#adc7f7","surface-bright":"#f7fafc","tertiary-fixed-dim":"#ffb3b0","primary-container":"#1a365d","surface-variant":"#e0e3e5","surface-dim":"#d7dadc","on-secondary-container":"#715000","on-error-container":"#93000a","secondary-fixed":"#ffdea6",background:"#f7fafc","error-container":"#ffdad6","tertiary-container":"#631d1e",error:"#ba1a1a",outline:"#74777f","inverse-surface":"#2d3133","surface-container-low":"#f1f4f6","inverse-on-surface":"#eef1f3","surface-container-lowest":"#ffffff","on-error":"#ffffff","on-primary-fixed-variant":"#2d476f","tertiary-fixed":"#ffdad8","on-tertiary-fixed":"#3f0307","outline-variant":"#c4c6cf","primary-fixed-dim":"#adc7f7","on-surface":"#181c1e","on-secondary":"#ffffff","surface-container-high":"#e5e9eb","on-tertiary":"#ffffff","primary-fixed":"#d6e3ff","on-surface-variant":"#43474e","on-background":"#181c1e","surface-tint":"#455f88","surface-container-highest":"#e0e3e5","on-primary-container":"#86a0cd","on-primary":"#ffffff",primary:"#002045","on-primary-fixed":"#001b3c","on-secondary-fixed-variant":"#5d4200","on-tertiary-fixed-variant":"#792e2e","secondary-container":"#fdc34d","on-tertiary-container":"#e5837f","secondary-fixed-dim":"#f7bd48"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"container-max":"1200px","margin-mobile":"20px","margin-desktop":"40px",unit:"8px",gutter:"16px"},fontFamily:{"stats-numeric":["Inter"],"label-sm":["Inter"],"display-lg":["Playfair Display"],"body-lg":["Inter"],"headline-md":["Playfair Display"],"body-md":["Inter"],"display-lg-mobile":["Playfair Display"]},fontSize:{"stats-numeric":["20px",{lineHeight:"24px",fontWeight:"700"}],"label-sm":["12px",{lineHeight:"16px",letterSpacing:"0.05em",fontWeight:"600"}],"display-lg":["48px",{lineHeight:"56px",letterSpacing:"-0.02em",fontWeight:"700"}],"display-lg-mobile":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-md":["24px",{lineHeight:"32px",fontWeight:"600"}],"body-lg":["18px",{lineHeight:"28px",fontWeight:"400"}],"body-md":["16px",{lineHeight:"24px",fontWeight:"400"}]}}}}
 </script>
 <link rel="stylesheet" href="/css/styles.css">
 </head>
@@ -23,7 +23,6 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#
 </div>
 <div>
 <h2 class="font-label-sm text-label-sm text-primary user-name">Collector</h2>
-<p class="font-label-sm text-label-sm text-on-surface-variant font-normal" id="sub-status">Premium Member</p>
 </div>
 </div>
 <div class="flex-1 py-6 px-4 space-y-2 overflow-y-auto">
@@ -35,9 +34,9 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#
 <span class="material-symbols-outlined">center_focus_weak</span>
 <span class="font-label-sm text-label-sm">Identify</span>
 </a>
-<a href="/pricing.html" class="flex items-center gap-unit text-on-surface-variant px-4 py-3 hover:bg-surface-variant rounded-xl transition-all duration-200">
-<span class="material-symbols-outlined">workspace_premium</span>
-<span class="font-label-sm text-label-sm">Subscription</span>
+<a href="https://www.donationalerts.com/r/StampSnap" target="_blank" rel="noopener" class="flex items-center gap-unit text-on-surface-variant px-4 py-3 hover:bg-surface-variant rounded-xl transition-all duration-200">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-label-sm text-label-sm">Donate</span>
 </a>
 <a href="/contact.html" class="flex items-center gap-unit text-on-surface-variant px-4 py-3 hover:bg-surface-variant rounded-xl transition-all duration-200">
 <span class="material-symbols-outlined">mail</span>
@@ -91,24 +90,10 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#
 </div>
 <hr class="border-t-2 border-dashed border-outline-variant my-2"/>
 <div>
-<h4 class="font-label-sm text-label-sm text-on-surface-variant mb-1">Scans Used</h4>
-<div class="flex items-center gap-2">
+<h4 class="font-label-sm text-label-sm text-on-surface-variant mb-1">Scans</h4>
 <p class="font-stats-numeric text-stats-numeric text-primary text-2xl" id="scans-used">0</p>
-<span class="font-label-sm text-label-sm text-on-surface-variant">/ <span id="scans-limit">5</span></span>
 </div>
 </div>
-</div>
-</section>
-<section id="sub-management" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 soft-shadow hidden">
-  <div class="flex items-center justify-between">
-    <div>
-      <h3 class="font-headline-md text-headline-md text-primary mb-1">Subscription</h3>
-      <p class="font-body-md text-body-md text-on-surface-variant" id="sub-detail">Active</p>
-    </div>
-    <button id="cancel-sub-btn" onclick="cancelSubscription()" class="bg-error-container text-on-error-container font-label-sm text-label-sm px-4 py-2 rounded-lg hover:opacity-90 transition-all hidden flex items-center gap-2">
-      <span class="material-symbols-outlined text-sm">cancel</span> Cancel Subscription
-    </button>
-  </div>
 </section>
 <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter pb-12" id="collection-grid">
 <p class="font-body-md text-body-md text-on-surface-variant col-span-full text-center py-12">Loading your collection...</p>
@@ -121,32 +106,11 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#
 async function loadDashboard() {
   if (!isLoggedIn()) { window.location.href = '/login.html'; return; }
   try {
-    const subData = await checkSubscription();
-    document.getElementById('scans-used').textContent = subData.scans_used || 0;
-    document.getElementById('scans-limit').textContent = subData.scans_limit || 5;
-    if (subData.trial_active) {
-      document.getElementById('sub-status').textContent = `Trial (${subData.trial_days_left}d left)`;
-    } else if (subData.status === 'active') {
-      document.getElementById('sub-status').textContent = 'Premium Member';
-    } else {
-      document.getElementById('sub-status').textContent = 'Free Member';
-    }
-    // Show subscription management for active/paying users
-    const subMgmt = document.getElementById('sub-management');
-    const cancelBtn = document.getElementById('cancel-sub-btn');
-    const subDetail = document.getElementById('sub-detail');
-    if (subData.status === 'active') {
-      subMgmt.classList.remove('hidden');
-      cancelBtn.classList.remove('hidden');
-      subDetail.textContent = `Premium — renews ${new Date(subData.subscription_end).toLocaleDateString()}`;
-    } else if (subData.status === 'expired') {
-      subMgmt.classList.remove('hidden');
-      subDetail.textContent = 'Expired — renew to keep premium features';
-    }
     const data = await apiRequest('/stamps/collection');
     const grid = document.getElementById('collection-grid');
     const stamps = data.stamps || [];
     let totalValue = 0;
+    document.getElementById('scans-used').textContent = stamps.length;
     if (stamps.length === 0) {
       grid.innerHTML = `<div class="col-span-full text-center py-12">
         <span class="material-symbols-outlined text-6xl text-on-surface-variant mb-4 block">auto_awesome_motion</span>
@@ -168,7 +132,6 @@ async function loadDashboard() {
             <span class="font-display-lg text-display-lg text-primary/20 text-6xl">${s.name.split(' ').map(w=>w[0]).join('').slice(0,2)}</span>
           </div>
           <div class="absolute top-3 left-3 bg-primary text-on-primary font-label-sm text-label-sm px-2 py-1 rounded shadow-sm">${(s.country || '??').slice(0,3).toUpperCase()}</div>
-          ${isHighValue ? '<div class="absolute top-3 right-3 text-secondary"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1;">workspace_premium</span></div>' : ''}
         </div>
         <div class="p-4 flex-1 flex flex-col">
           <h3 class="font-headline-md text-headline-md text-primary mb-1 text-lg">${s.name}</h3>
@@ -186,24 +149,7 @@ async function loadDashboard() {
     console.error('Dashboard error:', err);
   }
 }
-async function cancelSubscription() {
-  if (!confirm('Are you sure you want to cancel your subscription?')) return;
-  try {
-    await apiRequest('/subscription/cancel', { method: 'POST' });
-    alert('Subscription cancelled.');
-    location.reload();
-  } catch (err) {
-    alert('Cancel error: ' + err.message);
-  }
-}
 
-// Handle redirect from Cryptomus success
-document.addEventListener('DOMContentLoaded', () => {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('demo') === 'success') {
-    alert('Subscription demo activated! Configure Cryptomus merchant ID for live payments.');
-  }
-});
 document.addEventListener('DOMContentLoaded', loadDashboard);
 </script>
 </body>
