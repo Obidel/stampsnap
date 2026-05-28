@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact - StampSnap</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#271900",secondary:"#7b5800","surface-container":"#ebeef0",surface:"#f7fafc",tertiary:"#46070b","inverse-primary":"#adc7f7","surface-bright":"#f7fafc","tertiary-fixed-dim":"#ffb3b0","primary-container":"#1a365d","surface-variant":"#e0e3e5","surface-dim":"#d7dadc","on-secondary-container":"#715000","on-error-container":"#93000a","secondary-fixed":"#ffdea6",background:"#f7fafc","error-container":"#ffdad6","tertiary-container":"#631d1e",error:"#ba1a1a",outline:"#74777f","inverse-surface":"#2d3133","surface-container-low":"#f1f4f6","inverse-on-surface":"#eef1f3","surface-container-lowest":"#ffffff","on-error":"#ffffff","on-primary-fixed-variant":"#2d476f","tertiary-fixed":"#ffdad8","on-tertiary-fixed":"#3f0307","outline-variant":"#c4c6cf","primary-fixed-dim":"#adc7f7","on-surface":"#181c1e","on-secondary":"#ffffff","surface-container-high":"#e5e9eb","on-tertiary":"#ffffff","primary-fixed":"#d6e3ff","on-surface-variant":"#43474e","on-background":"#181c1e","surface-tint":"#455f88","surface-container-highest":"#e0e3e5","on-primary-container":"#86a0cd","on-primary":"#ffffff",primary:"#002045","on-primary-fixed":"#001b3c","on-secondary-fixed-variant":"#5d4200","on-tertiary-fixed-variant":"#792e2e","secondary-container":"#fdc34d","on-tertiary-container":"#e5837f","secondary-fixed-dim":"#f7bd48"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"container-max":"1200px","margin-mobile":"20px","margin-desktop":"40px",unit:"8px",gutter:"16px"},fontFamily:{"stats-numeric":["Inter"],"label-sm":["Inter"],"display-lg":["Playfair Display"],"body-lg":["Inter"],"headline-md":["Playfair Display"],"body-md":["Inter"],"display-lg-mobile":["Playfair Display"]},fontSize:{"stats-numeric":["20px",{lineHeight:"24px",fontWeight:"700"}],"label-sm":["12px",{lineHeight:"16px",letterSpacing:"0.05em",fontWeight:"600"}],"display-lg":["48px",{lineHeight:"56px",letterSpacing:"-0.02em",fontWeight:"700"}],"display-lg-mobile":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-md":["24px",{lineHeight:"32px",fontWeight:"600"}],"body-lg":["18px",{lineHeight:"28px",fontWeight:"400"}],"body-md":["16px",{lineHeight:"24px",fontWeight:"400"}]}}}}
+</script>
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col paper-texture">
+<nav class="w-full top-0 sticky bg-surface border-b border-outline-variant shadow-sm z-50">
+<div class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="flex items-center gap-8">
+<a class="flex items-center gap-2" href="/"><img src="/logo.svg" alt="StampSnap" class="h-8"></a>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="/">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="/app.html">AI Scan</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="/blog.html">Blog</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="/pricing.html">Pricing</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-sm text-label-sm" href="/contact.html">Contact</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<a href="/login.html" class="auth-btn font-label-sm text-label-sm text-primary border border-outline-variant px-4 py-2 rounded hover:bg-surface-container-low transition-colors">Sign In</a>
+<a href="/signup.html" class="auth-btn font-label-sm text-label-sm bg-primary text-on-primary px-4 py-2 rounded hover:opacity-90 transition-opacity">Get Started</a>
+<div class="user-menu hidden relative">
+<button onclick="document.getElementById('user-dropdown').classList.toggle('hidden')" class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 font-label-sm text-label-sm hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm">person</span>
+<span class="user-name">User</span>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<div id="user-dropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg py-2 z-50">
+<a href="/dashboard.html" class="flex items-center gap-2 px-4 py-2 font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-sm">dashboard</span>Dashboard</a>
+<a href="/app.html" class="flex items-center gap-2 px-4 py-2 font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-sm">center_focus_weak</span>Scan</a>
+<a href="/blog.html" class="flex items-center gap-2 px-4 py-2 font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-sm">article</span>Blog</a>
+<a href="/contact.html" class="flex items-center gap-2 px-4 py-2 font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-sm">mail</span>Contact</a>
+<hr class="border-outline-variant my-1">
+<button id="logout-btn" class="w-full flex items-center gap-2 px-4 py-2 font-label-sm text-label-sm text-tertiary hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-sm">logout</span>Sign Out</button>
+</div>
+</div>
+</div>
+</div>
+</nav>
+
+<div class="flex flex-1">
+<main class="flex-1 px-margin-mobile md:px-margin-desktop py-12 md:py-16">
+<div class="max-w-2xl mx-auto text-center">
+<h1 class="font-display-lg text-display-lg text-primary mb-4">Get in Touch</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-12">Have a question, suggestion, or need help? We'd love to hear from you.</p>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 soft-shadow">
+<div class="w-12 h-12 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary mb-2">Email</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Send us a message anytime.</p>
+<a href="mailto:info@stampsnap.site" class="text-secondary font-label-sm text-label-sm hover:underline break-all">info@stampsnap.site</a>
+</div>
+
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 soft-shadow">
+<div class="w-12 h-12 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined">forum</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary mb-2">Social</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Follow us for stamp news and updates.</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Twitter / X &middot; Telegram &middot; Discord</p>
+</div>
+</div>
+
+<div class="mt-12 bg-surface-container-lowest border border-outline-variant rounded-xl p-8 soft-shadow text-left">
+<h2 class="font-headline-md text-headline-md text-primary mb-4">Send a Message</h2>
+<form id="contact-form" class="space-y-4">
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant block mb-1">Name</label>
+<input type="text" id="contact-name" class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Your name">
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant block mb-1">Email</label>
+<input type="email" id="contact-email" class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="your@email.com">
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant block mb-1">Message</label>
+<textarea id="contact-message" rows="5" class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none" placeholder="How can we help?"></textarea>
+</div>
+<button type="submit" class="bg-primary text-on-primary font-label-sm text-label-sm px-8 py-3 rounded-lg hover:opacity-90 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">send</span> Send Message
+</button>
+</form>
+<p class="font-body-md text-body-md text-on-surface-variant mt-4 text-sm">Or email us directly at <a href="mailto:info@stampsnap.site" class="text-secondary hover:underline">info@stampsnap.site</a></p>
+</div>
+</div>
+</main>
+</div>
+
+<footer class="border-t border-outline-variant py-8 text-center font-body-md text-body-md text-on-surface-variant">
+&copy; 2026 StampSnap. All rights reserved.
+</footer>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  updateNavForAuth();
+  const logoutBtn = document.getElementById('logout-btn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('stampsnap_token');
+      localStorage.removeItem('stampsnap_user');
+      window.location.href = '/';
+    });
+  }
+  const form = document.getElementById('contact-form');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('contact-name').value.trim();
+      const email = document.getElementById('contact-email').value.trim();
+      const message = document.getElementById('contact-message').value.trim();
+      if (!name || !email || !message) { alert('Please fill in all fields.'); return; }
+      window.location.href = `mailto:info@stampsnap.site?subject=StampSnap Contact - ${encodeURIComponent(name)}&body=${encodeURIComponent(message + '\n\nFrom: ' + name + ' (' + email + ')')}`;
+    });
+  }
+});
+</script>
+</body>
+</html>
